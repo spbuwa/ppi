@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Politics Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .question h3 {
+            margin-top: 0;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Indian Politics Quiz</h1>
+        
+        <!-- User Input Form -->
+        <div id="userForm">
+            <h2>Enter Your Details</h2>
+            <form id="detailsForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+                
+                <label for="surname">Surname:</label>
+                <input type="text" id="surname" required>
+                
+                <label for="class">Class:</label>
+                <input type="text" id="class" required>
+                
+                <label for="roll">Roll Number:</label>
+                <input type="text" id="roll" required>
+                
+                <button type="submit">Start Quiz</button>
+            </form>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div id="quiz" class="hidden">
+            <h2>Quiz Questions</h2>
+            <form id="quizForm">
+                <div class="question" data-qnum="1">
+                    <h3>1. Which Act led to the reorganization of states on linguistic basis in 1956?</h3>
+                    <label><input type="radio" name="q1" value="a"> States Reorganization Act</label>
+                    <label><input type="radio" name="q1" value="b"> Constitution Amendment Act</label>
+                    <label><input type="radio" name="q1" value="c"> Federal Act</label>
+                    <label><input type="radio" name="q1" value="d"> Linguistic Act</label>
+                </div>
+                
+                <div class="question" data-qnum="2">
+                    <h3>2. How many states were there initially after independence?</h3>
+                    <label><input type="radio" name="q2" value="a"> 14</label>
+                    <label><input type="radio" name="q2" value="b"> 27</label>
+                    <label><input type="radio" name="q2" value="c"> 29</label>
+                    <label><input type="radio" name="q2" value="d"> 28</label>
+                </div>
+                
+                <div class="question" data-qnum="3">
+                    <h3>3. Which state was created due to regional disparities in development?</h3>
+                    <label><input type="radio" name="q3" value="a"> Telangana</label>
+                    <label><input type="radio" name="q3" value="b"> Uttarakhand</label>
+                    <label><input type="radio" name="q3" value="c"> Jharkhand</label>
+                    <label><input type="radio" name="q3" value="d"> Chhattisgarh</label>
+                </div>
+                
+                <div class="question" data-qnum="4">
+                    <h3>4. Sub-regionalism is often linked to:</h3>
+                    <label><input type="radio" name="q4" value="a"> Economic backwardness</label>
+                    <label><input type="radio" name="q4" value="b"> Cultural uniformity</label>
+                    <label><input type="radio" name="q4" value="c"> Urbanization</label>
+                    <label><input type="radio" name="q4" value="d"> Globalization</label>
+                </div>
+                
+                <div class="question" data-qnum="5">
+                    <h3>5. The demand for Gorkhaland is an example of:</h3>
+                    <label><input type="radio" name="q5" value="a"> Ethnic sub-regionalism</label>
+                    <label><input type="radio" name="q5" value="b"> Linguistic demand</label>
+                    <label><input type="radio" name="q5" value="c"> Religious statehood</label>
+                    <label><input type="radio" name="q5" value="d"> Economic disparity</label>
+                </div>
+                
+                <div class="question" data-qnum="6">
+                    <h3>6. Which commission recommended the reorganization of states?</h3>
+                    <label><input type="radio" name="q6" value="a"> Fazl Ali Commission</label>
+                    <label><input type="radio" name="q6" value="b"> Sarkaria Commission</label>
+                    <label><input type="radio" name="q6" value="c"> Mandal Commission</label>
+                    <label><input type="radio" name="q6" value="d"> Kaka Kalelkar Commission</label>
+                </div>
+                
+                <div class="question" data-qnum="7">
+                    <h3>7. Telangana was bifurcated from which state?</h3>
+                    <label><input type="radio" name="q7" value="a"> Andhra Pradesh</label>
+                    <label><input type="radio" name="q7" value="b"> Maharashtra</label>
+                    <label><input type="radio" name="q7" value="c"> Karnataka</label>
+                    <label><input type="radio" name="q7" value="d"> Kerala</label>
+                </div>
+                
+                <div class="question" data-qnum="8">
+                    <h3>8. Regional disparities are addressed through:</h3>
+                    <label><input type="radio" name="q8" value="a"> Finance Commission</label>
+                    <label><input type="radio" name="q8" value="b"> Planning Commission</label>
+                    <label><input type="radio" name="q8" value="c"> NITI Aayog</label>
+                    <label><input type="radio" name="q8" value="d"> All of the above</label>
+                </div>
+                
+                <div class="question" data-qnum="9">
+                    <h3>9. The Bodoland movement is in:</h3>
+                    <label><input type="radio" name="q9" value="a"> Assam</label>
+                    <label><input type="radio" name="q9" value="b"> Nagaland</label>
+                    <label><input type="radio" name="q9" value="c"> Manipur</label>
+                    <label><input type="radio" name="q9" value="d"> Mizoram</label>
+                </div>
+                
+                <div class="question" data-qnum="10">
+                    <h3>10. Which is not a criterion for state reorganization?</h3>
+                    <label><input type="radio" name="q10" value="a"> Language</label>
+                    <label><input type="radio" name="q10" value="b"> Culture</label>
+                    <label><input type="radio" name="q10" value="c"> Religion</label>
+                    <label><input type="radio" name="q10" value="d"> Economic viability</label>
+                </div>
+                
+                <div class="question" data-qnum="11">
+                    <h3>11. Uttarakhand was created in:</h3>
+                    <label><input type="radio" name="q11" value="a"> 2000</label>
+                    <label><input type="radio" name="q11" value="b"> 1956</label>
+                    <label><input type="radio" name="q11" value="c"> 2014</label>
+                    <label><input type="radio" name="q11" value="d"> 1990</label>
+                </div>
+                
+                <div class="question" data-qnum="12">
+                    <h3>12. Sub-regionalism in Vidarbha is in:</h3>
+                    <label><input type="radio" name="q12" value="a"> Maharashtra</label>
+                    <label><input type="radio" name="q12" value="b"> Madhya Pradesh</label>
+                    <label><input type="radio" name="q12" value="c"> Gujarat</label>
+                    <label><input type="radio" name="q12" value="d"> Rajasthan</label>
+                </div>
+                
+                <!-- Unit 2 -->
+                <div class="question" data-qnum="13">
+                    <h3>13. The one-party dominance era in India was led by:</h3>
+                    <label><input type="radio" name="q13" value="a"> Congress</label>
+                    <label><input type="radio" name="q13" value="b"> BJP</label>
+                    <label><input type="radio" name="q13" value="c"> CPI</label>
+                    <label><input type="radio" name="q13" value="d"> BSP</label>
+                </div>
+                
+                <div class="question" data-qnum="14">
+                    <h3>14. Multi-party system emerged prominently after:</h3>
+                    <label><input type="radio" name="q14" value="a"> 1977 Elections</label>
+                    <label><input type="radio" name="q14" value="b"> 1952</label>
+                    <label><input type="radio" name="q14" value="c"> 1984</label>
+                    <label><input type="radio" name="q14" value="d"> 2004</label>
+                </div>
+                
+                <div class="question" data-qnum="15">
+                    <h3>15. Which is a national party?</h3>
+                    <label><input type="radio" name="q15" value="a"> AAP</label>
+                    <label><input type="radio" name="q15" value="b"> INC</label>
+                    <label><input type="radio" name="q15" value="c"> DMK</label>
+                    <label><input type="radio" name="q15" value="d"> SP</label>
+                </div>
+                
+                <div class="question" data-qnum="16">
+                    <h3>16. Regional parties focus on:</h3>
+                    <label><input type="radio" name="q16" value="a"> Regional issues</label>
+                    <label><input type="radio" name="q16" value="b"> National security</label>
+                    <label><input type="radio" name="q16" value="c"> Foreign policy</label>
+                    <label><input type="radio" name="q16" value="d"> Defense</label>
+                </div>
+                
+                <div class="question" data-qnum="17">
+                    <h3>17. Coalition politics started with:</h3>
+                    <label><input type="radio" name="q17" value="a"> Janata Party Government 1977</label>
+                    <label><input type="radio" name="q17" value="b"> Congress 1952</label>
+                    <label><input type="radio" name="q17" value="c"> NDA 1998</label>
+                    <label><input type="radio" name="q17" value="d"> UPA 2004</label>
+                </div>
+                
+                <div class="question" data-qnum="18">
+                    <h3>18. NDA is led by:</h3>
+                    <label><input type="radio" name="q18" value="a"> BJP</label>
+                    <label><input type="radio" name="q18" value="b"> INC</label>
+                    <label><input type="radio" name="q18" value="c"> CPI(M)</label>
+                    <label><input type="radio" name="q18" value="d"> TDP</label>
+                </div>
+                
+                <div class="question" data-qnum="19">
+                    <h3>19. The party system in India is:</h3>
+                    <label><input type="radio" name="q19" value="a"> Federal multi-party</label>
+                    <label><input type="radio" name="q19" value="b"> Two-party</label>
+                    <label><input type="radio" name="q19" value="c"> One-party</label>
+                    <label><input type="radio" name="q19" value="d"> Dominant party</label>
+                </div>
+                
+                <div class="question" data-qnum="20">
+                    <h3>20. Which regional party is from Tamil Nadu?</h3>
+                    <label><input type="radio" name="q20" value="a"> DMK</label>
+                    <label><input type="radio" name="q20" value="b"> Shiv Sena</label>
+                    <label><input type="radio" name="q20" value="c"> Akali Dal</label>
+                    <label><input type="radio" name="q20" value="d"> Trinamool Congress</label>
+                </div>
+                
+                <div class="question" data-qnum="21">
+                    <h3>21. UPA was formed in:</h3>
+                    <label><input type="radio" name="q21" value="a"> 2004</label>
+                    <label><input type="radio" name="q21" value="b"> 1998</label>
+                    <label><input type="radio" name="q21" value="c"> 1977</label>
+                    <label><input type="radio" name="q21" value="d"> 1989</label>
+                </div>
+                
+                <div class="question" data-qnum="22">
+                    <h3>22. The evolution of party system saw decline of Congress after:</h3>
+                    <label><input type="radio" name="q22" value="a"> Emergency 1975</label>
+                    <label><input type="radio" name="q22" value="b"> Independence</label>
+                    <label><input type="radio" name="q22" value="c"> 1952</label>
+                    <label><input type="radio" name="q22" value="d"> 2009</label>
+                </div>
+                
+                <div class="question" data-qnum="23">
+                    <h3>23. Coalition governments lead to:</h3>
+                    <label><input type="radio" name="q23" value="a"> Policy compromises</label>
+                    <label><input type="radio" name="q23" value="b"> Stable majority</label>
+                    <label><input type="radio" name="q23" value="c"> Single party rule</label>
+                    <label><input type="radio" name="q23" value="d"> Dictatorship</label>
+                </div>
+                
+                <div class="question" data-qnum="24">
+                    <h3>24. Which is not a national party as of 2023?</h3>
+                    <label><input type="radio" name="q24" value="a"> AITC</label>
+                    <label><input type="radio" name="q24" value="b"> NCP</label>
+                    <label><input type="radio" name="q24" value="c"> BJP</label>
+                    <label><input type="radio" name="q24" value="d"> INC</label>
+                </div>
+                
+                <div class="question" data-qnum="25">
+                    <h3>25. The first coalition era was:</h3>
+                    <label><input type="radio" name="q25" value="a"> 1989-1991</label>
+                    <label><input type="radio" name="q25" value="b"> 1952-1977</label>
+                    <label><input type="radio" name="q25" value="c"> 2004-2014</label>
+                    <label><input type="radio" name="q25" value="d"> 1991-1996</label>
+                </div>
+                
+                <!-- Unit 3 -->
+                <div class="question" data-qnum="26">
+                    <h3>26. Identity politics based on religion is associated with:</h3>
+                    <label><input type="radio" name="q26" value="a"> BJP's Hindutva</label>
+                    <label><input type="radio" name="q26" value="b"> Secularism</label>
+                    <label><input type="radio" name="q26" value="c"> Communism</label>
+                    <label><input type="radio" name="q26" value="d"> Socialism</label>
+                </div>
+                
+                <div class="question" data-qnum="27">
+                    <h3>27. Mandal Commission dealt with:</h3>
+                    <label><input type="radio" name="q27" value="a"> OBC reservations</label>
+                    <label><input type="radio" name="q27" value="b"> SC/ST</label>
+                    <label><input type="radio" name="q27" value="c"> Women</label>
+                    <label><input type="radio" name="q27" value="d"> Minorities</label>
+                </div>
+                
+                <div class="question" data-qnum="28">
+                    <h3>28. Gender identity politics includes demands for:</h3>
+                    <label><input type="radio" name="q28" value="a"> 33% reservation in legislatures</label>
+                    <label><input type="radio" name="q28" value="b"> Land reforms</label>
+                    <label><input type="radio" name="q28" value="c"> Economic liberalization</label>
+                    <label><input type="radio" name="q28" value="d"> Urban planning</label>
+                </div>
+                
+                <div class="question" data-qnum="29">
+                    <h3>29. Caste mobilization is highest in:</h3>
+                    <label><input type="radio" name="q29" value="a"> North India</label>
+                    <label><input type="radio" name="q29" value="b"> South India</label>
+                    <label><input type="radio" name="q29" value="c"> East India</label>
+                    <label><input type="radio" name="q29" value="d"> West India</label>
+                </div>
+                
+                <div class="question" data-qnum="30">
+                    <h3>30. The Shah Bano case was related to:</h3>
+                    <label><input type="radio" name="q30" value="a"> Muslim women's maintenance</label>
+                    <label><input type="radio" name="q30" value="b"> Hindu code</label>
+                    <label><input type="radio" name="q30" value="c"> Christian marriage</label>
+                    <label><input type="radio" name="q30" value="d"> Sikh rights</label>
+                </div>
+                
+                <div class="question" data-qnum="31">
+                    <h3>31. BSP represents:</h3>
+                    <label><input type="radio" name="q31" value="a"> Dalit identity</label>
+                    <label><input type="radio" name="q31" value="b"> Upper caste</label>
+                    <label><input type="radio" name="q31" value="c"> Muslims</label>
+                    <label><input type="radio" name="q31" value="d"> Christians</label>
+                </div>
+                
+                <div class="question" data-qnum="32">
+                    <h3>32. Women's reservation bill was passed in:</h3>
+                    <label><input type="radio" name="q32" value="a"> 2023</label>
+                    <label><input type="radio" name="q32" value="b"> 1993</label>
+                    <label><input type="radio" name="q32" value="c"> 1950</label>
+                    <label><input type="radio" name="q32" value="d"> 2010</label>
+                </div>
+                
+                <div class="question" data-qnum="33">
+                    <h3>33. Religious identity politics includes:</h3>
+                    <label><input type="radio" name="q33" value="a"> Ayodhya dispute</label>
+                    <label><input type="radio" name="q33" value="b"> Language policy</label>
+                    <label><input type="radio" name="q33" value="c"> Federalism</label>
+                    <label><input type="radio" name="q33" value="d"> Economy</label>
+                </div>
+                
+                <div class="question" data-qnum="34">
+                    <h3>34. Caste census demand is for:</h3>
+                    <label><input type="radio" name="q34" value="a"> Accurate OBC count</label>
+                    <label><input type="radio" name="q34" value="b"> SC only</label>
+                    <label><input type="radio" name="q34" value="c"> ST only</label>
+                    <label><input type="radio" name="q34" value="d"> General category</label>
+                </div>
+                
+                <div class="question" data-qnum="35">
+                    <h3>35. #MeToo movement in India highlighted:</h3>
+                    <label><input type="radio" name="q35" value="a"> Gender-based violence</label>
+                    <label><input type="radio" name="q35" value="b"> Caste discrimination</label>
+                    <label><input type="radio" name="q35" value="c"> Religious intolerance</label>
+                    <label><input type="radio" name="q35" value="d"> Economic inequality</label>
+                </div>
+                
+                <div class="question" data-qnum="36">
+                    <h3>36. Uniform Civil Code aims to:</h3>
+                    <label><input type="radio" name="q36" value="a"> Reduce religious identity divides</label>
+                    <label><input type="radio" name="q36" value="b"> Promote caste system</label>
+                    <label><input type="radio" name="q36" value="c"> Ignore gender</label>
+                    <label><input type="radio" name="q36" value="d"> Support federalism</label>
+                </div>
+                
+                <div class="question" data-qnum="37">
+                    <h3>37. RJD is associated with:</h3>
+                    <label><input type="radio" name="q37" value="a"> Yadav caste mobilization</label>
+                    <label><input type="radio" name="q37" value="b"> Brahmin</label>
+                    <label><input type="radio" name="q37" value="c"> Sikh</label>
+                    <label><input type="radio" name="q37" value="d"> Christian</label>
+                </div>
+                
+                <!-- Unit 4 -->
+                <div class="question" data-qnum="38">
+                    <h3>38. The Election Commission of India was established in:</h3>
+                    <label><input type="radio" name="q38" value="a"> 1950</label>
+                    <label><input type="radio" name="q38" value="b"> 1947</label>
+                    <label><input type="radio" name="q38" value="c"> 1952</label>
+                    <label><input type="radio" name="q38" value="d"> 1960</label>
+                </div>
+                
+                <div class="question" data-qnum="39">
+                    <h3>39. First Lok Sabha election was in:</h3>
+                    <label><input type="radio" name="q39" value="a"> 1952</label>
+                    <label><input type="radio" name="q39" value="b"> 1947</label>
+                    <label><input type="radio" name="q39" value="c"> 1957</label>
+                    <label><input type="radio" name="q39" value="d"> 1962</label>
+                </div>
+                
+                <div class="question" data-qnum="40">
+                    <h3>40. Model Code of Conduct is enforced by:</h3>
+                    <label><input type="radio" name="q40" value="a"> Election Commission</label>
+                    <label><input type="radio" name="q40" value="b"> Parliament</label>
+                    <label><input type="radio" name="q40" value="c"> Supreme Court</label>
+                    <label><input type="radio" name="q40" value="d"> President</label>
+                </div>
+                
+                <div class="question" data-qnum="41">
+                    <h3>41. Voting behavior is influenced by:</h3>
+                    <label><input type="radio" name="q41" value="a"> Caste and religion</label>
+                    <label><input type="radio" name="q41" value="b"> Economy only</label>
+                    <label><input type="radio" name="q41" value="c"> Geography</label>
+                    <label><input type="radio" name="q41" value="d"> Age</label>
+                </div>
+                
+                <div class="question" data-qnum="42">
+                    <h3>42. The highest voter turnout in Lok Sabha was in:</h3>
+                    <label><input type="radio" name="q42" value="a"> 2019</label>
+                    <label><input type="radio" name="q42" value="b"> 1952</label>
+                    <label><input type="radio" name="q42" value="c"> 1984</label>
+                    <label><input type="radio" name="q42" value="d"> 2004</label>
+                </div>
+                
+                <div class="question" data-qnum="43">
+                    <h3>43. NOTA stands for:</h3>
+                    <label><input type="radio" name="q43" value="a"> None of the Above</label>
+                    <label><input type="radio" name="q43" value="b"> National Option</label>
+                    <label><input type="radio" name="q43" value="c"> No Total Agreement</label>
+                    <label><input type="radio" name="q43" value="d"> New Option To Abstain</label>
+                </div>
+                
+                <div class="question" data-qnum="44">
+                    <h3>44. Electoral system in India is:</h3>
+                    <label><input type="radio" name="q44" value="a"> First Past the Post</label>
+                    <label><input type="radio" name="q44" value="b"> Proportional Representation</label>
+                    <label><input type="radio" name="q44" value="c"> Single Transferable Vote</label>
+                    <label><input type="radio" name="q44" value="d"> List System</label>
+                </div>
+                
+                <div class="question" data-qnum="45">
+                    <h3>45. Indira Gandhi won absolute majority in:</h3>
+                    <label><input type="radio" name="q45" value="a"> 1971</label>
+                    <label><input type="radio" name="q45" value="b"> 1952</label>
+                    <label><input type="radio" name="q45" value="c"> 1980</label>
+                    <label><input type="radio" name="q45" value="d"> 1991</label>
+                </div>
+                
+                <div class="question" data-qnum="46">
+                    <h3>46. Emerging trend in voting is:</h3>
+                    <label><input type="radio" name="q46" value="a"> Rise of social media influence</label>
+                    <label><input type="radio" name="q46" value="b"> Decline of caste</label>
+                    <label><input type="radio" name="q46" value="c"> No change</label>
+                    <label><input type="radio" name="q46" value="d"> Only urban voting</label>
+                </div>
+                
+                <div class="question" data-qnum="47">
+                    <h3>47. VVPAT is used for:</h3>
+                    <label><input type="radio" name="q47" value="a"> Voter verifiable paper audit trail</label>
+                    <label><input type="radio" name="q47" value="b"> Voter verification</label>
+                    <label><input type="radio" name="q47" value="c"> Paper ballot</label>
+                    <label><input type="radio" name="q47" value="d"> Electronic voting</label>
+                </div>
+                
+                <div class="question" data-qnum="48">
+                    <h3>48. The 2014 Lok Sabha saw victory of:</h3>
+                    <label><input type="radio" name="q48" value="a"> BJP</label>
+                    <label><input type="radio" name="q48" value="b"> Congress</label>
+                    <label><input type="radio" name="q48" value="c"> Third Front</label>
+                    <label><input type="radio" name="q48" value="d"> Regional alliance</label>
+                </div>
+                
+                <div class="question" data-qnum="49">
+                    <h3>49. Anti-defection law was introduced in:</h3>
+                    <label><input type="radio" name="q49" value="a"> 1985</label>
+                    <label><input type="radio" name="q49" value="b"> 1950</label>
+                    <label><input type="radio" name="q49" value="c"> 1975</label>
+                    <label><input type="radio" name="q49" value="d"> 2002</label>
+                </div>
+                
+                <div class="question" data-qnum="50">
+                    <h3>50. Youth voting trend shows increase since:</h3>
+                    <label><input type="radio" name="q50" value="a"> 2014</label>
+                    <label><input type="radio" name="q50" value="b"> 1952</label>
+                    <label><input type="radio" name="q50" value="c"> 2009</label>
+                    <label><input type="radio" name="q50" value="d"> 1999</label>
+                </div>
+                
+                <button type="submit">Submit Quiz</button>
+            </form>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="results" class="hidden"></div>
+    </div>
+
+    <script>
+        // Correct answers: a for 1, a for 2, a for 3, a for 4, a for 5, a for 6, a for 7, d for 8, a for 9, c for 10, a for 11, a for 12,
+        // a for 13, a for 14, b for 15, a for 16, a for 17, a for 18, a for 19, a for 20, a for 21, a for 22, a for 23, a for 24, a for 25,
+        // a for 26, a for 27, a for 28, a for 29, a for 30, a for 31, a for 32, a for 33, a for 34, a for 35, a for 36, a for 37,
+        // a for 38, a for 39, a for 40, a for 41, a for 42, a for 43, a for 44, a for 45, a for 46, a for 47, a for 48, a for 49, a for 50
+        const correctAnswers = {
+            q1: 'a', q2: 'a', q3: 'a', q4: 'a', q5: 'a', q6: 'a', q7: 'a', q8: 'd', q9: 'a', q10: 'c',
+            q11: 'a', q12: 'a', q13: 'a', q14: 'a', q15: 'b', q16: 'a', q17: 'a', q18: 'a', q19: 'a', q20: 'a',
+            q21: 'a', q22: 'a', q23: 'a', q24: 'a', q25: 'a', q26: 'a', q27: 'a', q28: 'a', q29: 'a', q30: 'a',
+            q31: 'a', q32: 'a', q33: 'a', q34: 'a', q35: 'a', q36: 'a', q37: 'a', q38: 'a', q39: 'a', q40: 'a',
+            q41: 'a', q42: 'a', q43: 'a', q44: 'a', q45: 'a', q46: 'a', q47: 'a', q48: 'a', q49: 'a', q50: 'a'
+        };
+
+        // User details
+        let userDetails = {};
+
+        // Handle user form submission
+        document.getElementById('detailsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            userDetails = {
+                name: document.getElementById('name').value,
+                surname: document.getElementById('surname').value,
+                class: document.getElementById('class').value,
+                roll: document.getElementById('roll').value
+            };
+            document.getElementById('userForm').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+        });
+
+        // Handle quiz submission
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const results = [];
+
+            for (let i = 1; i <= 50; i++) {
+                const qName = 'q' + i;
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                const questionDiv = document.querySelector(`[data-qnum="${i}"]`);
+                const isCorrect = selected && selected.value === correctAnswers[qName];
+                
+                if (isCorrect) score++;
+                
+                results.push({
+                    num: i,
+                    selected: selected ? selected.value : null,
+                    correct: correctAnswers[qName],
+                    isCorrect: isCorrect,
+                    div: questionDiv
+                });
+            }
+
+            // Hide quiz
+            document.getElementById('quiz').classList.add('hidden');
+
+            // Show results
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.innerHTML = `
+                <h2>Quiz Results</h2>
+                <div class="score">Score: ${score}/50</div>
+                <p><strong>Name:</strong> ${userDetails.name} ${userDetails.surname}</p>
+                <p><strong>Class:</strong> ${userDetails.class}</p>
+                <p><strong>Roll Number:</strong> ${userDetails.roll}</p>
+                <h3>Question-wise Feedback:</h3>
+                ${results.map(r => `
+                    <div class="question ${r.isCorrect ? 'correct' : 'incorrect'}">
+                        <h3>Question ${r.num}: ${r.div.querySelector('h3').textContent}</h3>
+                        <p>Your answer: ${r.selected || 'None'}</p>
+                        <p>Correct answer: ${r.correct}</p>
+                        ${!r.isCorrect && r.selected ? '<p>Explanation: Review the topic for accuracy.</p>' : ''}
+                    </div>
+                `).join('')}
+                <button onclick="location.reload()">Retake Quiz</button>
+            `;
+        });
+    </script>
+</body>
+</html>
