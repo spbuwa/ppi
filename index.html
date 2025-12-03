@@ -80,6 +80,11 @@
             font-weight: bold;
             margin: 10px 0;
         }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -296,9 +301,9 @@
                 </div>
                 
                 <div class="question" data-qnum="24">
-                    <h3>24. Which is not a national party as of 2023?</h3>
-                    <label><input type="radio" name="q24" value="a"> AITC</label>
-                    <label><input type="radio" name="q24" value="b"> NCP</label>
+                    <h3>24. Which party lost its national party status in recent years?</h3>
+                    <label><input type="radio" name="q24" value="a"> NCP</label>
+                    <label><input type="radio" name="q24" value="b"> AITC</label>
                     <label><input type="radio" name="q24" value="c"> BJP</label>
                     <label><input type="radio" name="q24" value="d"> INC</label>
                 </div>
@@ -522,16 +527,66 @@
     </div>
 
     <script>
-        // Correct answers: a for 1, a for 2, a for 3, a for 4, a for 5, a for 6, a for 7, d for 8, a for 9, c for 10, a for 11, a for 12,
-        // a for 13, a for 14, b for 15, a for 16, a for 17, a for 18, a for 19, a for 20, a for 21, a for 22, a for 23, a for 24, a for 25,
-        // a for 26, a for 27, a for 28, a for 29, a for 30, a for 31, a for 32, a for 33, a for 34, a for 35, a for 36, a for 37,
-        // a for 38, a for 39, a for 40, a for 41, a for 42, a for 43, a for 44, a for 45, a for 46, a for 47, a for 48, a for 49, a for 50
+        // Correct answers updated: q2 to 'b', q24 to 'a' (NCP faced issues, adjusted question)
         const correctAnswers = {
-            q1: 'a', q2: 'a', q3: 'a', q4: 'a', q5: 'a', q6: 'a', q7: 'a', q8: 'd', q9: 'a', q10: 'c',
+            q1: 'a', q2: 'b', q3: 'a', q4: 'a', q5: 'a', q6: 'a', q7: 'a', q8: 'd', q9: 'a', q10: 'c',
             q11: 'a', q12: 'a', q13: 'a', q14: 'a', q15: 'b', q16: 'a', q17: 'a', q18: 'a', q19: 'a', q20: 'a',
             q21: 'a', q22: 'a', q23: 'a', q24: 'a', q25: 'a', q26: 'a', q27: 'a', q28: 'a', q29: 'a', q30: 'a',
             q31: 'a', q32: 'a', q33: 'a', q34: 'a', q35: 'a', q36: 'a', q37: 'a', q38: 'a', q39: 'a', q40: 'a',
             q41: 'a', q42: 'a', q43: 'a', q44: 'a', q45: 'a', q46: 'a', q47: 'a', q48: 'a', q49: 'a', q50: 'a'
+        };
+
+        const explanations = {
+            q1: "The States Reorganisation Act, 1956, reorganized states primarily on linguistic lines to address demands for linguistic states.",
+            q2: "Immediately after independence in 1950, India had 27 states and union territories (9 Part A, 8 Part B, 10 Part C) before the 1956 reorganization.",
+            q3: "Telangana was created in 2014 from Andhra Pradesh primarily due to long-standing regional disparities in development and resource allocation.",
+            q4: "Sub-regionalism arises from feelings of neglect and economic backwardness in certain areas within a state, leading to demands for separate statehood.",
+            q5: "The Gorkhaland movement in West Bengal is driven by the ethnic identity of the Gorkha community seeking a separate state.",
+            q6: "The Fazl Ali Commission (States Reorganisation Commission) in 1953 recommended the linguistic reorganization of states.",
+            q7: "The Andhra Pradesh Reorganisation Act, 2014, bifurcated Andhra Pradesh to form the new state of Telangana.",
+            q8: "All these bodies—Finance Commission, Planning Commission (now NITI Aayog)—play roles in allocating resources to reduce regional imbalances.",
+            q9: "The Bodoland movement seeks autonomy for the Bodo people in Assam, leading to the creation of the Bodoland Territorial Region.",
+            q10: "While language, culture, and economic viability were key criteria, religion was deliberately avoided to prevent communal divisions.",
+            q11: "Uttarakhand was carved out of Uttar Pradesh in 2000 to address hill region's developmental disparities.",
+            q12: "Vidarbha region in Maharashtra has seen sub-regional movements due to perceived neglect compared to other parts of the state.",
+            q13: "From 1952 to 1977, the Indian National Congress dominated national politics, often securing absolute majorities.",
+            q14: "The 1977 elections, following the Emergency, marked the end of Congress dominance and rise of multi-party competition.",
+            q15: "The Indian National Congress (INC) is one of the six recognized national parties by the Election Commission of India.",
+            q16: "Regional parties like DMK or Shiv Sena primarily focus on state-specific issues such as language, culture, and local development.",
+            q17: "The Janata Party coalition government in 1977 was the first non-Congress government at the center, ushering in coalition politics.",
+            q18: "The National Democratic Alliance (NDA) is a coalition led by the Bharatiya Janata Party (BJP).",
+            q19: "India's party system is characterized as a federal multi-party system, accommodating national and regional parties.",
+            q20: "The Dravida Munnetra Kazhagam (DMK) is a prominent regional party in Tamil Nadu, advocating Dravidian ideology.",
+            q21: "The United Progressive Alliance (UPA), led by INC, was formed in 2004 to form the government after the elections.",
+            q22: "The declaration of Emergency in 1975 and the 1977 election defeat significantly weakened Congress's dominance.",
+            q23: "Coalition governments often require compromises on policies to maintain alliance stability and consensus.",
+            q24: "The NCP faced internal splits and symbol freeze issues in 2023-2024, leading to challenges in its national status.",
+            q25: "The period 1989-1991 saw the first major coalition government under V.P. Singh, marking the shift from single-party rule.",
+            q26: "The BJP's Hindutva ideology mobilizes Hindu identity in politics, influencing religious polarization.",
+            q27: "The Mandal Commission (1979) recommended 27% reservation for Other Backward Classes (OBCs) in government jobs.",
+            q28: "The Women's Reservation Bill seeks 33% seats for women in Parliament and state legislatures to enhance gender representation.",
+            q29: "Caste-based mobilization is particularly intense in North India, influencing party formations and electoral alliances.",
+            q30: "The 1985 Shah Bano case Supreme Court judgment granted maintenance to a divorced Muslim woman, sparking debates on personal laws.",
+            q31: "The Bahujan Samaj Party (BSP), founded by Kanshi Ram, primarily represents Dalit (SC) communities.",
+            q32: "The Constitution (106th Amendment) Act, 2023, provides for 33% women's reservation in legislative bodies.",
+            q33: "The Ayodhya Ram Janmabhoomi-Babri Masjid dispute has been a flashpoint for Hindu-Muslim identity politics.",
+            q34: "Demands for a caste census aim to update data on OBC populations for fair reservation and welfare policies.",
+            q35: "The #MeToo movement in 2018 exposed sexual harassment in India, amplifying demands for gender justice.",
+            q36: "The Uniform Civil Code seeks a common set of laws on marriage, divorce, etc., to promote secularism over religious personal laws.",
+            q37: "The Rashtriya Janata Dal (RJD) in Bihar mobilizes backward castes, particularly Yadavs, under Lalu Prasad Yadav's leadership.",
+            q38: "Article 324 of the Constitution established the Election Commission in 1950 to superintend elections.",
+            q39: "The first general elections to the Lok Sabha were held in 1951-52, establishing democratic foundations.",
+            q40: "The Election Commission enforces the Model Code of Conduct to ensure free and fair elections.",
+            q41: "In India, voting behavior is heavily influenced by caste, religion, and community affiliations alongside other factors.",
+            q42: "The 2019 Lok Sabha elections recorded the highest voter turnout at over 67%, reflecting increased participation.",
+            q43: "NOTA (None of the Above) was introduced in 2013 as an option for voters dissatisfied with all candidates.",
+            q44: "India uses the First Past the Post (FPTP) system for Lok Sabha and assembly elections, where the candidate with most votes wins.",
+            q45: "In the 1971 elections, Indira Gandhi's Congress secured a massive majority with the 'Garibi Hatao' slogan.",
+            q46: "Social media has emerged as a key influencer in recent elections, shaping voter opinions and campaigns.",
+            q47: "VVPAT provides a paper trail for EVM votes, allowing voters to verify their choice and enabling audits.",
+            q48: "The BJP-led NDA won a historic majority in 2014, with Narendra Modi becoming Prime Minister.",
+            q49: "The 52nd Constitutional Amendment in 1985 introduced the anti-defection law to curb political defections.",
+            q50: "Youth voter turnout has notably increased since the 2014 elections, driven by awareness campaigns and issues like employment."
         };
 
         // User details
@@ -564,12 +619,17 @@
                 
                 if (isCorrect) score++;
                 
+                const feedback = isCorrect 
+                    ? `Correct! ${explanations[qName]}` 
+                    : `Incorrect. Your answer: ${selected ? selected.nextSibling.textContent.trim().slice(1) : 'None'}. Correct answer: ${correctAnswers[qName]}. ${explanations[qName]}`;
+                
                 results.push({
                     num: i,
                     selected: selected ? selected.value : null,
                     correct: correctAnswers[qName],
                     isCorrect: isCorrect,
-                    div: questionDiv
+                    div: questionDiv,
+                    feedback: feedback
                 });
             }
 
@@ -581,17 +641,18 @@
             resultsDiv.classList.remove('hidden');
             resultsDiv.innerHTML = `
                 <h2>Quiz Results</h2>
-                <div class="score">Score: ${score}/50</div>
+                <div class="score">Score: ${score}/50 (${Math.round((score/50)*100)}%)</div>
                 <p><strong>Name:</strong> ${userDetails.name} ${userDetails.surname}</p>
                 <p><strong>Class:</strong> ${userDetails.class}</p>
                 <p><strong>Roll Number:</strong> ${userDetails.roll}</p>
                 <h3>Question-wise Feedback:</h3>
                 ${results.map(r => `
                     <div class="question ${r.isCorrect ? 'correct' : 'incorrect'}">
-                        <h3>Question ${r.num}: ${r.div.querySelector('h3').textContent}</h3>
-                        <p>Your answer: ${r.selected || 'None'}</p>
-                        <p>Correct answer: ${r.correct}</p>
-                        ${!r.isCorrect && r.selected ? '<p>Explanation: Review the topic for accuracy.</p>' : ''}
+                        <h3>Question ${r.num}</h3>
+                        <p><strong>Question:</strong> ${r.div.querySelector('h3').textContent}</p>
+                        <div class="feedback">
+                            <strong>Feedback:</strong> ${r.feedback}
+                        </div>
                     </div>
                 `).join('')}
                 <button onclick="location.reload()">Retake Quiz</button>
