@@ -28,7 +28,7 @@
             display: block;
             margin: 10px 0 5px;
         }
-        input[type="text"], select {
+        input[type="text"], input[type="number"], select {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
@@ -43,8 +43,12 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        button:hover {
+        button:hover:not(:disabled) {
             background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
         }
         .question {
             margin-bottom: 20px;
@@ -85,11 +89,37 @@
             padding: 10px;
             border-radius: 4px;
         }
+        #stopwatch {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            color: #333;
+        }
+        #visitCount {
+            text-align: center;
+            margin: 10px 0;
+            color: #666;
+            font-style: italic;
+        }
+        .reference-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .reference-link:hover {
+            text-decoration: underline;
+        }
+        .marathi {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Indian Politics Quiz</h1>
+        <div id="visitCount"></div>
         
         <!-- User Input Form -->
         <div id="userForm">
@@ -105,7 +135,7 @@
                 <input type="text" id="class" required>
                 
                 <label for="roll">Roll Number:</label>
-                <input type="text" id="roll" required>
+                <input type="number" id="roll" min="1" max="120" required>
                 
                 <button type="submit">Start Quiz</button>
             </form>
@@ -114,411 +144,412 @@
         <!-- Quiz Section -->
         <div id="quiz" class="hidden">
             <h2>Quiz Questions</h2>
+            <div id="stopwatch">Time: 00:00:00</div>
             <form id="quizForm">
                 <div class="question" data-qnum="1">
-                    <h3>1. Which Act led to the reorganization of states on linguistic basis in 1956?</h3>
-                    <label><input type="radio" name="q1" value="a"> States Reorganization Act</label>
-                    <label><input type="radio" name="q1" value="b"> Constitution Amendment Act</label>
-                    <label><input type="radio" name="q1" value="c"> Federal Act</label>
-                    <label><input type="radio" name="q1" value="d"> Linguistic Act</label>
+                    <h3>1. Which Act led to the reorganization of states on linguistic basis in 1956? <span class="marathi">(कोणत्या कायद्याने १९५६ मध्ये भाषेवर आधारित राज्यांची पुनर्रचना केली?)</span></h3>
+                    <label><input type="radio" name="q1" value="a"> States Reorganization Act <span class="marathi">(राज्य पुनर्गठन कायदा)</span></label>
+                    <label><input type="radio" name="q1" value="b"> Constitution Amendment Act <span class="marathi">(संविधान दुरुस्ती कायदा)</span></label>
+                    <label><input type="radio" name="q1" value="c"> Federal Act <span class="marathi">(फेडरल कायदा)</span></label>
+                    <label><input type="radio" name="q1" value="d"> Linguistic Act <span class="marathi">(भाषिक कृती)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="2">
-                    <h3>2. How many states were there initially after independence?</h3>
-                    <label><input type="radio" name="q2" value="a"> 14</label>
-                    <label><input type="radio" name="q2" value="b"> 27</label>
-                    <label><input type="radio" name="q2" value="c"> 29</label>
-                    <label><input type="radio" name="q2" value="d"> 28</label>
+                    <h3>2. How many states were there initially after independence? <span class="marathi">(स्वातंत्र्यानंतर प्रारंभी किती राज्ये होती?)</span></h3>
+                    <label><input type="radio" name="q2" value="a"> 14 <span class="marathi">(१४)</span></label>
+                    <label><input type="radio" name="q2" value="b"> 27 <span class="marathi">(२७)</span></label>
+                    <label><input type="radio" name="q2" value="c"> 29 <span class="marathi">(२९)</span></label>
+                    <label><input type="radio" name="q2" value="d"> 28 <span class="marathi">(२८)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="3">
-                    <h3>3. Which state was created due to regional disparities in development?</h3>
-                    <label><input type="radio" name="q3" value="a"> Telangana</label>
-                    <label><input type="radio" name="q3" value="b"> Uttarakhand</label>
-                    <label><input type="radio" name="q3" value="c"> Jharkhand</label>
-                    <label><input type="radio" name="q3" value="d"> Chhattisgarh</label>
+                    <h3>3. Which state was created due to regional disparities in development? <span class="marathi">(कोणत्या राज्याची निर्मिती विकासातील प्रादेशिक असमानतेमुळे झाली?)</span></h3>
+                    <label><input type="radio" name="q3" value="a"> Telangana <span class="marathi">(तेलंगणा)</span></label>
+                    <label><input type="radio" name="q3" value="b"> Uttarakhand <span class="marathi">(उत्तराखंड)</span></label>
+                    <label><input type="radio" name="q3" value="c"> Jharkhand <span class="marathi">(झारखंड)</span></label>
+                    <label><input type="radio" name="q3" value="d"> Chhattisgarh <span class="marathi">(छत्तीसगढ)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="4">
-                    <h3>4. Sub-regionalism is often linked to:</h3>
-                    <label><input type="radio" name="q4" value="a"> Economic backwardness</label>
-                    <label><input type="radio" name="q4" value="b"> Cultural uniformity</label>
-                    <label><input type="radio" name="q4" value="c"> Urbanization</label>
-                    <label><input type="radio" name="q4" value="d"> Globalization</label>
+                    <h3>4. Sub-regionalism is often linked to: <span class="marathi">(उप-प्रादेशिकता अनेकदा जोडले जाते:)</span></h3>
+                    <label><input type="radio" name="q4" value="a"> Economic backwardness <span class="marathi">(आर्थिक मागासलेपणा)</span></label>
+                    <label><input type="radio" name="q4" value="b"> Cultural uniformity <span class="marathi">(सांस्कृतिक एकरूपता)</span></label>
+                    <label><input type="radio" name="q4" value="c"> Urbanization <span class="marathi">(नगरीकरण)</span></label>
+                    <label><input type="radio" name="q4" value="d"> Globalization <span class="marathi">(वैश्वीकरण)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="5">
-                    <h3>5. The demand for Gorkhaland is an example of:</h3>
-                    <label><input type="radio" name="q5" value="a"> Ethnic sub-regionalism</label>
-                    <label><input type="radio" name="q5" value="b"> Linguistic demand</label>
-                    <label><input type="radio" name="q5" value="c"> Religious statehood</label>
-                    <label><input type="radio" name="q5" value="d"> Economic disparity</label>
+                    <h3>5. The demand for Gorkhaland is an example of: <span class="marathi">(गोरखालँडची मागणी ही एक उदाहरण आहे:)</span></h3>
+                    <label><input type="radio" name="q5" value="a"> Ethnic sub-regionalism <span class="marathi">(जातीय उप-प्रादेशिकता)</span></label>
+                    <label><input type="radio" name="q5" value="b"> Linguistic demand <span class="marathi">(भाषिक मागणी)</span></label>
+                    <label><input type="radio" name="q5" value="c"> Religious statehood <span class="marathi">(धर्मराज्यता)</span></label>
+                    <label><input type="radio" name="q5" value="d"> Economic disparity <span class="marathi">(आर्थिक असमानता)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="6">
-                    <h3>6. Which commission recommended the reorganization of states?</h3>
-                    <label><input type="radio" name="q6" value="a"> Fazl Ali Commission</label>
-                    <label><input type="radio" name="q6" value="b"> Sarkaria Commission</label>
-                    <label><input type="radio" name="q6" value="c"> Mandal Commission</label>
-                    <label><input type="radio" name="q6" value="d"> Kaka Kalelkar Commission</label>
+                    <h3>6. Which commission recommended the reorganization of states? <span class="marathi">(कोणती आयोगाने राज्यांची पुनर्रचना सुचवली?)</span></h3>
+                    <label><input type="radio" name="q6" value="a"> Fazl Ali Commission <span class="marathi">(फजल अली आयोग)</span></label>
+                    <label><input type="radio" name="q6" value="b"> Sarkaria Commission <span class="marathi">(सरकारिया आयोग)</span></label>
+                    <label><input type="radio" name="q6" value="c"> Mandal Commission <span class="marathi">(मंडल आयोग)</span></label>
+                    <label><input type="radio" name="q6" value="d"> Kaka Kalelkar Commission <span class="marathi">(काका कलेलकर आयोग)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="7">
-                    <h3>7. Telangana was bifurcated from which state?</h3>
-                    <label><input type="radio" name="q7" value="a"> Andhra Pradesh</label>
-                    <label><input type="radio" name="q7" value="b"> Maharashtra</label>
-                    <label><input type="radio" name="q7" value="c"> Karnataka</label>
-                    <label><input type="radio" name="q7" value="d"> Kerala</label>
+                    <h3>7. Telangana was bifurcated from which state? <span class="marathi">(तेलंगणा कोणत्या राज्यातून विभाजित झाले?)</span></h3>
+                    <label><input type="radio" name="q7" value="a"> Andhra Pradesh <span class="marathi">(आंध्र प्रदेश)</span></label>
+                    <label><input type="radio" name="q7" value="b"> Maharashtra <span class="marathi">(महाराष्ट्र)</span></label>
+                    <label><input type="radio" name="q7" value="c"> Karnataka <span class="marathi">(कर्नाटक)</span></label>
+                    <label><input type="radio" name="q7" value="d"> Kerala <span class="marathi">(केरळ)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="8">
-                    <h3>8. Regional disparities are addressed through:</h3>
-                    <label><input type="radio" name="q8" value="a"> Finance Commission</label>
-                    <label><input type="radio" name="q8" value="b"> Planning Commission</label>
-                    <label><input type="radio" name="q8" value="c"> NITI Aayog</label>
-                    <label><input type="radio" name="q8" value="d"> All of the above</label>
+                    <h3>8. Regional disparities are addressed through: <span class="marathi">(क्षेत्रीय असमानता :)</span></h3>
+                    <label><input type="radio" name="q8" value="a"> Finance Commission <span class="marathi">(वित्त आयोग)</span></label>
+                    <label><input type="radio" name="q8" value="b"> Planning Commission <span class="marathi">(योजना आयोग)</span></label>
+                    <label><input type="radio" name="q8" value="c"> NITI Aayog <span class="marathi">(नीति आयोग)</span></label>
+                    <label><input type="radio" name="q8" value="d"> All of the above <span class="marathi">(सर्व वरील)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="9">
-                    <h3>9. The Bodoland movement is in:</h3>
-                    <label><input type="radio" name="q9" value="a"> Assam</label>
-                    <label><input type="radio" name="q9" value="b"> Nagaland</label>
-                    <label><input type="radio" name="q9" value="c"> Manipur</label>
-                    <label><input type="radio" name="q9" value="d"> Mizoram</label>
+                    <h3>9. The Bodoland movement is in: <span class="marathi">(बॉडोलँड चळवळ आहे:)</span></h3>
+                    <label><input type="radio" name="q9" value="a"> Assam <span class="marathi">(असम)</span></label>
+                    <label><input type="radio" name="q9" value="b"> Nagaland <span class="marathi">(नागालँड)</span></label>
+                    <label><input type="radio" name="q9" value="c"> Manipur <span class="marathi">(मणिपूर)</span></label>
+                    <label><input type="radio" name="q9" value="d"> Mizoram <span class="marathi">(मिझोरम)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="10">
-                    <h3>10. Which is not a criterion for state reorganization?</h3>
-                    <label><input type="radio" name="q10" value="a"> Language</label>
-                    <label><input type="radio" name="q10" value="b"> Culture</label>
-                    <label><input type="radio" name="q10" value="c"> Religion</label>
-                    <label><input type="radio" name="q10" value="d"> Economic viability</label>
+                    <h3>10. Which is not a criterion for state reorganization? <span class="marathi">(कोण हे राज्य पुनर्रचनेचे निकष नाही?)</span></h3>
+                    <label><input type="radio" name="q10" value="a"> Language <span class="marathi">(भाषा)</span></label>
+                    <label><input type="radio" name="q10" value="b"> Culture <span class="marathi">(संस्कृती)</span></label>
+                    <label><input type="radio" name="q10" value="c"> Religion <span class="marathi">(धर्म)</span></label>
+                    <label><input type="radio" name="q10" value="d"> Economic viability <span class="marathi">(आर्थिक व्यवहार्यता)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="11">
-                    <h3>11. Uttarakhand was created in:</h3>
-                    <label><input type="radio" name="q11" value="a"> 2000</label>
-                    <label><input type="radio" name="q11" value="b"> 1956</label>
-                    <label><input type="radio" name="q11" value="c"> 2014</label>
-                    <label><input type="radio" name="q11" value="d"> 1990</label>
+                    <h3>11. Uttarakhand was created in: <span class="marathi">(उत्तराखंड कधी निर्माण झाले:)</span></h3>
+                    <label><input type="radio" name="q11" value="a"> 2000 <span class="marathi">(२०००)</span></label>
+                    <label><input type="radio" name="q11" value="b"> 1956 <span class="marathi">(१९५६)</span></label>
+                    <label><input type="radio" name="q11" value="c"> 2014 <span class="marathi">(२०१४)</span></label>
+                    <label><input type="radio" name="q11" value="d"> 1990 <span class="marathi">(१९९०)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="12">
-                    <h3>12. Sub-regionalism in Vidarbha is in:</h3>
-                    <label><input type="radio" name="q12" value="a"> Maharashtra</label>
-                    <label><input type="radio" name="q12" value="b"> Madhya Pradesh</label>
-                    <label><input type="radio" name="q12" value="c"> Gujarat</label>
-                    <label><input type="radio" name="q12" value="d"> Rajasthan</label>
+                    <h3>12. Sub-regionalism in Vidarbha is in: <span class="marathi">(विदर्भातील उप-प्रादेशिकता आहे:)</span></h3>
+                    <label><input type="radio" name="q12" value="a"> Maharashtra <span class="marathi">(महाराष्ट्र)</span></label>
+                    <label><input type="radio" name="q12" value="b"> Madhya Pradesh <span class="marathi">(मध्य प्रदेश)</span></label>
+                    <label><input type="radio" name="q12" value="c"> Gujarat <span class="marathi">(गुजरात)</span></label>
+                    <label><input type="radio" name="q12" value="d"> Rajasthan <span class="marathi">(राजस्थान)</span></label>
                 </div>
                 
                 <!-- Unit 2 -->
                 <div class="question" data-qnum="13">
-                    <h3>13. The one-party dominance era in India was led by:</h3>
-                    <label><input type="radio" name="q13" value="a"> Congress</label>
-                    <label><input type="radio" name="q13" value="b"> BJP</label>
-                    <label><input type="radio" name="q13" value="c"> CPI</label>
-                    <label><input type="radio" name="q13" value="d"> BSP</label>
+                    <h3>13. The one-party dominance era in India was led by: <span class="marathi">(भारतातील एकपक्षीय वर्चस्व काळ कोणाकडून नेतृत्त्वात होता:)</span></h3>
+                    <label><input type="radio" name="q13" value="a"> Congress <span class="marathi">(काँग्रेस)</span></label>
+                    <label><input type="radio" name="q13" value="b"> BJP <span class="marathi">(बीजेपी)</span></label>
+                    <label><input type="radio" name="q13" value="c"> CPI <span class="marathi">(सीपीआय)</span></label>
+                    <label><input type="radio" name="q13" value="d"> BSP <span class="marathi">(बीएसपी)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="14">
-                    <h3>14. Multi-party system emerged prominently after:</h3>
-                    <label><input type="radio" name="q14" value="a"> 1977 Elections</label>
-                    <label><input type="radio" name="q14" value="b"> 1952</label>
-                    <label><input type="radio" name="q14" value="c"> 1984</label>
-                    <label><input type="radio" name="q14" value="d"> 2004</label>
+                    <h3>14. Multi-party system emerged prominently after: <span class="marathi">(बहुपक्षीय व्यवस्था प्रमुखपणे उदयास आली:)</span></h3>
+                    <label><input type="radio" name="q14" value="a"> 1977 Elections <span class="marathi">(१९७७ निवडणुका)</span></label>
+                    <label><input type="radio" name="q14" value="b"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q14" value="c"> 1984 <span class="marathi">(१९८४)</span></label>
+                    <label><input type="radio" name="q14" value="d"> 2004 <span class="marathi">(२००४)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="15">
-                    <h3>15. Which is a national party?</h3>
-                    <label><input type="radio" name="q15" value="a"> AAP</label>
-                    <label><input type="radio" name="q15" value="b"> INC</label>
-                    <label><input type="radio" name="q15" value="c"> DMK</label>
-                    <label><input type="radio" name="q15" value="d"> SP</label>
+                    <h3>15. Which is a national party? <span class="marathi">(कोणता राष्ट्रीय पक्ष आहे?)</span></h3>
+                    <label><input type="radio" name="q15" value="a"> AAP <span class="marathi">(एएपी)</span></label>
+                    <label><input type="radio" name="q15" value="b"> INC <span class="marathi">(इन्क)</span></label>
+                    <label><input type="radio" name="q15" value="c"> DMK <span class="marathi">(डीएमके)</span></label>
+                    <label><input type="radio" name="q15" value="d"> SP <span class="marathi">(एसपी)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="16">
-                    <h3>16. Regional parties focus on:</h3>
-                    <label><input type="radio" name="q16" value="a"> Regional issues</label>
-                    <label><input type="radio" name="q16" value="b"> National security</label>
-                    <label><input type="radio" name="q16" value="c"> Foreign policy</label>
-                    <label><input type="radio" name="q16" value="d"> Defense</label>
+                    <h3>16. Regional parties focus on: <span class="marathi">(प्रादेशिक पक्षांवर लक्ष केंद्रित करतात:)</span></h3>
+                    <label><input type="radio" name="q16" value="a"> Regional issues <span class="marathi">(क्षेत्रीय मुद्दे)</span></label>
+                    <label><input type="radio" name="q16" value="b"> National security <span class="marathi">(राष्ट्रीय सुरक्षितता)</span></label>
+                    <label><input type="radio" name="q16" value="c"> Foreign policy <span class="marathi">(विदेश नीति)</span></label>
+                    <label><input type="radio" name="q16" value="d"> Defense <span class="marathi">(संरक्षण)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="17">
-                    <h3>17. Coalition politics started with:</h3>
-                    <label><input type="radio" name="q17" value="a"> Janata Party Government 1977</label>
-                    <label><input type="radio" name="q17" value="b"> Congress 1952</label>
-                    <label><input type="radio" name="q17" value="c"> NDA 1998</label>
-                    <label><input type="radio" name="q17" value="d"> UPA 2004</label>
+                    <h3>17. Coalition politics started with: <span class="marathi">(संघराजकीय राजकारण सुरू झाले:)</span></h3>
+                    <label><input type="radio" name="q17" value="a"> Janata Party Government 1977 <span class="marathi">(जनता पार्टी सरकार १९७७)</span></label>
+                    <label><input type="radio" name="q17" value="b"> Congress 1952 <span class="marathi">(काँग्रेस १९५२)</span></label>
+                    <label><input type="radio" name="q17" value="c"> NDA 1998 <span class="marathi">(एनडीए १९९८)</span></label>
+                    <label><input type="radio" name="q17" value="d"> UPA 2004 <span class="marathi">(यूपीए २००४)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="18">
-                    <h3>18. NDA is led by:</h3>
-                    <label><input type="radio" name="q18" value="a"> BJP</label>
-                    <label><input type="radio" name="q18" value="b"> INC</label>
-                    <label><input type="radio" name="q18" value="c"> CPI(M)</label>
-                    <label><input type="radio" name="q18" value="d"> TDP</label>
+                    <h3>18. NDA is led by: <span class="marathi">(एनडीए चे नेतृत्व कोणाकडून केले जाते:)</span></h3>
+                    <label><input type="radio" name="q18" value="a"> BJP <span class="marathi">(बीजेपी)</span></label>
+                    <label><input type="radio" name="q18" value="b"> INC <span class="marathi">(इन्सी)</span></label>
+                    <label><input type="radio" name="q18" value="c"> CPI(M) <span class="marathi">(सीपीआय(एम))</span></label>
+                    <label><input type="radio" name="q18" value="d"> TDP <span class="marathi">(टीडीपी)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="19">
-                    <h3>19. The party system in India is:</h3>
-                    <label><input type="radio" name="q19" value="a"> Federal multi-party</label>
-                    <label><input type="radio" name="q19" value="b"> Two-party</label>
-                    <label><input type="radio" name="q19" value="c"> One-party</label>
-                    <label><input type="radio" name="q19" value="d"> Dominant party</label>
+                    <h3>19. The party system in India is: <span class="marathi">(भारतातील पक्षव्यवस्था आहे:)</span></h3>
+                    <label><input type="radio" name="q19" value="a"> Federal multi-party <span class="marathi">(फेडरल मल्टी-पार्टी)</span></label>
+                    <label><input type="radio" name="q19" value="b"> Two-party <span class="marathi">(द्विपक्षीय)</span></label>
+                    <label><input type="radio" name="q19" value="c"> One-party <span class="marathi">(एकल-पक्षीय)</span></label>
+                    <label><input type="radio" name="q19" value="d"> Dominant party <span class="marathi">(प्रधान पक्ष)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="20">
-                    <h3>20. Which regional party is from Tamil Nadu?</h3>
-                    <label><input type="radio" name="q20" value="a"> DMK</label>
-                    <label><input type="radio" name="q20" value="b"> Shiv Sena</label>
-                    <label><input type="radio" name="q20" value="c"> Akali Dal</label>
-                    <label><input type="radio" name="q20" value="d"> Trinamool Congress</label>
+                    <h3>20. Which regional party is from Tamil Nadu? <span class="marathi">(तामिळनाडूत कोणता प्रादेशिक पक्ष आहे?)</span></h3>
+                    <label><input type="radio" name="q20" value="a"> DMK <span class="marathi">(डीएमके)</span></label>
+                    <label><input type="radio" name="q20" value="b"> Shiv Sena <span class="marathi">(शिव सेना)</span></label>
+                    <label><input type="radio" name="q20" value="c"> Akali Dal <span class="marathi">(अकाली दल)</span></label>
+                    <label><input type="radio" name="q20" value="d"> Trinamool Congress <span class="marathi">(त्रिनामूल काँग्रेस)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="21">
-                    <h3>21. UPA was formed in:</h3>
-                    <label><input type="radio" name="q21" value="a"> 2004</label>
-                    <label><input type="radio" name="q21" value="b"> 1998</label>
-                    <label><input type="radio" name="q21" value="c"> 1977</label>
-                    <label><input type="radio" name="q21" value="d"> 1989</label>
+                    <h3>21. UPA was formed in: <span class="marathi">(यूपीए ची स्थापना कधी झाली?:)</span></h3>
+                    <label><input type="radio" name="q21" value="a"> 2004 <span class="marathi">(२००४)</span></label>
+                    <label><input type="radio" name="q21" value="b"> 1998 <span class="marathi">(१९९८)</span></label>
+                    <label><input type="radio" name="q21" value="c"> 1977 <span class="marathi">(१९७७)</span></label>
+                    <label><input type="radio" name="q21" value="d"> 1989 <span class="marathi">(१९८९)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="22">
-                    <h3>22. The evolution of party system saw decline of Congress after:</h3>
-                    <label><input type="radio" name="q22" value="a"> Emergency 1975</label>
-                    <label><input type="radio" name="q22" value="b"> Independence</label>
-                    <label><input type="radio" name="q22" value="c"> 1952</label>
-                    <label><input type="radio" name="q22" value="d"> 2009</label>
+                    <h3>22. The evolution of party system saw decline of Congress after: <span class="marathi">(पक्षव्यवस्थेच्या उत्क्रांतीने काँग्रेसचा ऱ्हास पाहिला:)</span></h3>
+                    <label><input type="radio" name="q22" value="a"> Emergency 1975 <span class="marathi">(आपत्कालीन १९७५)</span></label>
+                    <label><input type="radio" name="q22" value="b"> Independence <span class="marathi">(स्वातंत्र्य)</span></label>
+                    <label><input type="radio" name="q22" value="c"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q22" value="d"> 2009 <span class="marathi">(२००९)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="23">
-                    <h3>23. Coalition governments lead to:</h3>
-                    <label><input type="radio" name="q23" value="a"> Policy compromises</label>
-                    <label><input type="radio" name="q23" value="b"> Stable majority</label>
-                    <label><input type="radio" name="q23" value="c"> Single party rule</label>
-                    <label><input type="radio" name="q23" value="d"> Dictatorship</label>
+                    <h3>23. Coalition governments lead to: <span class="marathi">(संघ सरकारांना नेते:)</span></h3>
+                    <label><input type="radio" name="q23" value="a"> Policy compromises <span class="marathi">(निती समझौते)</span></label>
+                    <label><input type="radio" name="q23" value="b"> Stable majority <span class="marathi">(स्थिर बहुमत)</span></label>
+                    <label><input type="radio" name="q23" value="c"> Single party rule <span class="marathi">(एकल पक्ष शासन)</span></label>
+                    <label><input type="radio" name="q23" value="d"> Dictatorship <span class="marathi">(शासनतंत्र)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="24">
-                    <h3>24. Which party lost its national party status in recent years?</h3>
-                    <label><input type="radio" name="q24" value="a"> NCP</label>
-                    <label><input type="radio" name="q24" value="b"> AITC</label>
-                    <label><input type="radio" name="q24" value="c"> BJP</label>
-                    <label><input type="radio" name="q24" value="d"> INC</label>
+                    <h3>24. Which party lost its national party status in recent years? <span class="marathi">(कोणती पक्षाने अलीकडच्या वर्षांत त्याची राष्ट्रीय पक्षाची स्थिती गमावली?)</span></h3>
+                    <label><input type="radio" name="q24" value="a"> NCP <span class="marathi">(एनसीपी)</span></label>
+                    <label><input type="radio" name="q24" value="b"> AITC <span class="marathi">(AITC)</span></label>
+                    <label><input type="radio" name="q24" value="c"> BJP <span class="marathi">(बीजेपी)</span></label>
+                    <label><input type="radio" name="q24" value="d"> INC <span class="marathi">(इन्क)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="25">
-                    <h3>25. The first coalition era was:</h3>
-                    <label><input type="radio" name="q25" value="a"> 1989-1991</label>
-                    <label><input type="radio" name="q25" value="b"> 1952-1977</label>
-                    <label><input type="radio" name="q25" value="c"> 2004-2014</label>
-                    <label><input type="radio" name="q25" value="d"> 1991-1996</label>
+                    <h3>25. The first coalition era was: <span class="marathi">(पहिली आघाडी काळ होता:)</span></h3>
+                    <label><input type="radio" name="q25" value="a"> 1989-1991 <span class="marathi">(१९८९-१९९१)</span></label>
+                    <label><input type="radio" name="q25" value="b"> 1952-1977 <span class="marathi">(१९५२-१९७७)</span></label>
+                    <label><input type="radio" name="q25" value="c"> 2004-2014 <span class="marathi">(२००४-२०१४)</span></label>
+                    <label><input type="radio" name="q25" value="d"> 1991-1996 <span class="marathi">(१९९१-१९९६)</span></label>
                 </div>
                 
                 <!-- Unit 3 -->
                 <div class="question" data-qnum="26">
-                    <h3>26. Identity politics based on religion is associated with:</h3>
-                    <label><input type="radio" name="q26" value="a"> BJP's Hindutva</label>
-                    <label><input type="radio" name="q26" value="b"> Secularism</label>
-                    <label><input type="radio" name="q26" value="c"> Communism</label>
-                    <label><input type="radio" name="q26" value="d"> Socialism</label>
+                    <h3>26. Identity politics based on religion is associated with: <span class="marathi">(धर्मावर आधारित ओळख राजकारण संबंधित आहे:)</span></h3>
+                    <label><input type="radio" name="q26" value="a"> BJP's Hindutva <span class="marathi">(बीजेपीचे हिंदुत्व)</span></label>
+                    <label><input type="radio" name="q26" value="b"> Secularism <span class="marathi">(धर्मनिरपेक्षता)</span></label>
+                    <label><input type="radio" name="q26" value="c"> Communism <span class="marathi">(कम्युनिझम)</span></label>
+                    <label><input type="radio" name="q26" value="d"> Socialism <span class="marathi">(साम्यवाद)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="27">
-                    <h3>27. Mandal Commission dealt with:</h3>
-                    <label><input type="radio" name="q27" value="a"> OBC reservations</label>
-                    <label><input type="radio" name="q27" value="b"> SC/ST</label>
-                    <label><input type="radio" name="q27" value="c"> Women</label>
-                    <label><input type="radio" name="q27" value="d"> Minorities</label>
+                    <h3>27. Mandal Commission dealt with: <span class="marathi">(मंडल आयोग ने सौदा किया:)</span></h3>
+                    <label><input type="radio" name="q27" value="a"> OBC reservations <span class="marathi">(OBC आरक्षण)</span></label>
+                    <label><input type="radio" name="q27" value="b"> SC/ST <span class="marathi">(SC/ST)</span></label>
+                    <label><input type="radio" name="q27" value="c"> Women <span class="marathi">(स्त्रिया)</span></label>
+                    <label><input type="radio" name="q27" value="d"> Minorities <span class="marathi">(अल्पसंख्याक)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="28">
-                    <h3>28. Gender identity politics includes demands for:</h3>
-                    <label><input type="radio" name="q28" value="a"> 33% reservation in legislatures</label>
-                    <label><input type="radio" name="q28" value="b"> Land reforms</label>
-                    <label><input type="radio" name="q28" value="c"> Economic liberalization</label>
-                    <label><input type="radio" name="q28" value="d"> Urban planning</label>
+                    <h3>28. Gender identity politics includes demands for: <span class="marathi">(लिंग ओळख राजकारणात समाविष्ट आहे:)</span></h3>
+                    <label><input type="radio" name="q28" value="a"> 33% reservation in legislatures <span class="marathi">(३३% अधिवेशनांमध्ये राखीव जागा)</span></label>
+                    <label><input type="radio" name="q28" value="b"> Land reforms <span class="marathi">(भूमी सुधार)</span></label>
+                    <label><input type="radio" name="q28" value="c"> Economic liberalization <span class="marathi">(आर्थिक उदारीकरण)</span></label>
+                    <label><input type="radio" name="q28" value="d"> Urban planning <span class="marathi">(शहरी नियोजन)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="29">
-                    <h3>29. Caste mobilization is highest in:</h3>
-                    <label><input type="radio" name="q29" value="a"> North India</label>
-                    <label><input type="radio" name="q29" value="b"> South India</label>
-                    <label><input type="radio" name="q29" value="c"> East India</label>
-                    <label><input type="radio" name="q29" value="d"> West India</label>
+                    <h3>29. Caste mobilization is highest in: <span class="marathi">(जातीय जागरण सर्वाधिक आहे:)</span></h3>
+                    <label><input type="radio" name="q29" value="a"> North India <span class="marathi">(उत्तर भारत)</span></label>
+                    <label><input type="radio" name="q29" value="b"> South India <span class="marathi">(दक्षिण भारत)</span></label>
+                    <label><input type="radio" name="q29" value="c"> East India <span class="marathi">(पूर्व भारत)</span></label>
+                    <label><input type="radio" name="q29" value="d"> West India <span class="marathi">(पश्चिम भारत)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="30">
-                    <h3>30. The Shah Bano case was related to:</h3>
-                    <label><input type="radio" name="q30" value="a"> Muslim women's maintenance</label>
-                    <label><input type="radio" name="q30" value="b"> Hindu code</label>
-                    <label><input type="radio" name="q30" value="c"> Christian marriage</label>
-                    <label><input type="radio" name="q30" value="d"> Sikh rights</label>
+                    <h3>30. The Shah Bano case was related to: <span class="marathi">(शह बानो प्रकरणाशी संबंधित होते:)</span></h3>
+                    <label><input type="radio" name="q30" value="a"> Muslim women's maintenance <span class="marathi">(मुस्लिम महिलांची देखभाल)</span></label>
+                    <label><input type="radio" name="q30" value="b"> Hindu code <span class="marathi">(हिंदू कोड)</span></label>
+                    <label><input type="radio" name="q30" value="c"> Christian marriage <span class="marathi">(ख्रिश्चन लग्न)</span></label>
+                    <label><input type="radio" name="q30" value="d"> Sikh rights <span class="marathi">(सिख हक्क)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="31">
-                    <h3>31. BSP represents:</h3>
-                    <label><input type="radio" name="q31" value="a"> Dalit identity</label>
-                    <label><input type="radio" name="q31" value="b"> Upper caste</label>
-                    <label><input type="radio" name="q31" value="c"> Muslims</label>
-                    <label><input type="radio" name="q31" value="d"> Christians</label>
+                    <h3>31. BSP represents: <span class="marathi">(बीएसपी म्हणजे:)</span></h3>
+                    <label><input type="radio" name="q31" value="a"> Dalit identity <span class="marathi">(दलित ओळख)</span></label>
+                    <label><input type="radio" name="q31" value="b"> Upper caste <span class="marathi">(उंच जाती)</span></label>
+                    <label><input type="radio" name="q31" value="c"> Muslims <span class="marathi">(मुस्लिम)</span></label>
+                    <label><input type="radio" name="q31" value="d"> Christians <span class="marathi">(ख्रिस्ती)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="32">
-                    <h3>32. Women's reservation bill was passed in:</h3>
-                    <label><input type="radio" name="q32" value="a"> 2023</label>
-                    <label><input type="radio" name="q32" value="b"> 1993</label>
-                    <label><input type="radio" name="q32" value="c"> 1950</label>
-                    <label><input type="radio" name="q32" value="d"> 2010</label>
+                    <h3>32. Women's reservation bill was passed in: <span class="marathi">(महिला राखीव बिल कधी पारित झाले:)</span></h3>
+                    <label><input type="radio" name="q32" value="a"> 2023 <span class="marathi">(२०२३)</span></label>
+                    <label><input type="radio" name="q32" value="b"> 1993 <span class="marathi">(१९९३)</span></label>
+                    <label><input type="radio" name="q32" value="c"> 1950 <span class="marathi">(१९५०)</span></label>
+                    <label><input type="radio" name="q32" value="d"> 2010 <span class="marathi">(२०१०)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="33">
-                    <h3>33. Religious identity politics includes:</h3>
-                    <label><input type="radio" name="q33" value="a"> Ayodhya dispute</label>
-                    <label><input type="radio" name="q33" value="b"> Language policy</label>
-                    <label><input type="radio" name="q33" value="c"> Federalism</label>
-                    <label><input type="radio" name="q33" value="d"> Economy</label>
+                    <h3>33. Religious identity politics includes: <span class="marathi">(धर्मी ओळख राजकारण समाविष्ट करते:)</span></h3>
+                    <label><input type="radio" name="q33" value="a"> Ayodhya dispute <span class="marathi">(अयोध्या वाद)</span></label>
+                    <label><input type="radio" name="q33" value="b"> Language policy <span class="marathi">(भाषा धोरण)</span></label>
+                    <label><input type="radio" name="q33" value="c"> Federalism <span class="marathi">(संघवाद)</span></label>
+                    <label><input type="radio" name="q33" value="d"> Economy <span class="marathi">(अर्थव्यवस्था)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="34">
-                    <h3>34. Caste census demand is for:</h3>
-                    <label><input type="radio" name="q34" value="a"> Accurate OBC count</label>
-                    <label><input type="radio" name="q34" value="b"> SC only</label>
-                    <label><input type="radio" name="q34" value="c"> ST only</label>
-                    <label><input type="radio" name="q34" value="d"> General category</label>
+                    <h3>34. Caste census demand is for: <span class="marathi">(जाती जनगणना मागणी आहे:)</span></h3>
+                    <label><input type="radio" name="q34" value="a"> Accurate OBC count <span class="marathi">(निश्चित OBC गणना)</span></label>
+                    <label><input type="radio" name="q34" value="b"> SC only <span class="marathi">(एससी फक्त)</span></label>
+                    <label><input type="radio" name="q34" value="c"> ST only <span class="marathi">(ST फक्त)</span></label>
+                    <label><input type="radio" name="q34" value="d"> General category <span class="marathi">(सामान्य श्रेणी)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="35">
-                    <h3>35. #MeToo movement in India highlighted:</h3>
-                    <label><input type="radio" name="q35" value="a"> Gender-based violence</label>
-                    <label><input type="radio" name="q35" value="b"> Caste discrimination</label>
-                    <label><input type="radio" name="q35" value="c"> Religious intolerance</label>
-                    <label><input type="radio" name="q35" value="d"> Economic inequality</label>
+                    <h3>35. #MeToo movement in India highlighted: <span class="marathi">(#मीटू चळवळ भारतात हायलाइट केली:)</span></h3>
+                    <label><input type="radio" name="q35" value="a"> Gender-based violence <span class="marathi">(लिंग-आधारित हिंसा)</span></label>
+                    <label><input type="radio" name="q35" value="b"> Caste discrimination <span class="marathi">(जातीय भेदभाव)</span></label>
+                    <label><input type="radio" name="q35" value="c"> Religious intolerance <span class="marathi">(धार्मिक असहिष्णुता)</span></label>
+                    <label><input type="radio" name="q35" value="d"> Economic inequality <span class="marathi">(आर्थिक असमानता)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="36">
-                    <h3>36. Uniform Civil Code aims to:</h3>
-                    <label><input type="radio" name="q36" value="a"> Reduce religious identity divides</label>
-                    <label><input type="radio" name="q36" value="b"> Promote caste system</label>
-                    <label><input type="radio" name="q36" value="c"> Ignore gender</label>
-                    <label><input type="radio" name="q36" value="d"> Support federalism</label>
+                    <h3>36. Uniform Civil Code aims to: <span class="marathi">(युनिफॉर्म सिव्हिल कोडचे उद्दिष्ट आहे:)</span></h3>
+                    <label><input type="radio" name="q36" value="a"> Reduce religious identity divides <span class="marathi">(धार्मिक ओळख फुटी कमी करा)</span></label>
+                    <label><input type="radio" name="q36" value="b"> Promote caste system <span class="marathi">(जाती व्यवस्था प्रोत्साहन द्या)</span></label>
+                    <label><input type="radio" name="q36" value="c"> Ignore gender <span class="marathi">(लिंग दुर्लक्षित करा)</span></label>
+                    <label><input type="radio" name="q36" value="d"> Support federalism <span class="marathi">(संघवाद समर्थन)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="37">
-                    <h3>37. RJD is associated with:</h3>
-                    <label><input type="radio" name="q37" value="a"> Yadav caste mobilization</label>
-                    <label><input type="radio" name="q37" value="b"> Brahmin</label>
-                    <label><input type="radio" name="q37" value="c"> Sikh</label>
-                    <label><input type="radio" name="q37" value="d"> Christian</label>
+                    <h3>37. RJD is associated with: <span class="marathi">(आर.जे.डी. सोबत संबंधित आहे:)</span></h3>
+                    <label><input type="radio" name="q37" value="a"> Yadav caste mobilization <span class="marathi">(यादव जातीचे जागरण)</span></label>
+                    <label><input type="radio" name="q37" value="b"> Brahmin <span class="marathi">(ब्राह्मण)</span></label>
+                    <label><input type="radio" name="q37" value="c"> Sikh <span class="marathi">(सिख)</span></label>
+                    <label><input type="radio" name="q37" value="d"> Christian <span class="marathi">(ख्रिस्ती)</span></label>
                 </div>
                 
                 <!-- Unit 4 -->
                 <div class="question" data-qnum="38">
-                    <h3>38. The Election Commission of India was established in:</h3>
-                    <label><input type="radio" name="q38" value="a"> 1950</label>
-                    <label><input type="radio" name="q38" value="b"> 1947</label>
-                    <label><input type="radio" name="q38" value="c"> 1952</label>
-                    <label><input type="radio" name="q38" value="d"> 1960</label>
+                    <h3>38. The Election Commission of India was established in: <span class="marathi">(भारताची निवडणूक आयोग कधी स्थापन झाला:)</span></h3>
+                    <label><input type="radio" name="q38" value="a"> 1950 <span class="marathi">(१९५०)</span></label>
+                    <label><input type="radio" name="q38" value="b"> 1947 <span class="marathi">(१९४७)</span></label>
+                    <label><input type="radio" name="q38" value="c"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q38" value="d"> 1960 <span class="marathi">(१९६०)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="39">
-                    <h3>39. First Lok Sabha election was in:</h3>
-                    <label><input type="radio" name="q39" value="a"> 1952</label>
-                    <label><input type="radio" name="q39" value="b"> 1947</label>
-                    <label><input type="radio" name="q39" value="c"> 1957</label>
-                    <label><input type="radio" name="q39" value="d"> 1962</label>
+                    <h3>39. First Lok Sabha election was in: <span class="marathi">(पहिली लोकसभा निवडणूक कधी झाली:)</span></h3>
+                    <label><input type="radio" name="q39" value="a"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q39" value="b"> 1947 <span class="marathi">(१९४७)</span></label>
+                    <label><input type="radio" name="q39" value="c"> 1957 <span class="marathi">(१९५७)</span></label>
+                    <label><input type="radio" name="q39" value="d"> 1962 <span class="marathi">(१९६२)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="40">
-                    <h3>40. Model Code of Conduct is enforced by:</h3>
-                    <label><input type="radio" name="q40" value="a"> Election Commission</label>
-                    <label><input type="radio" name="q40" value="b"> Parliament</label>
-                    <label><input type="radio" name="q40" value="c"> Supreme Court</label>
-                    <label><input type="radio" name="q40" value="d"> President</label>
+                    <h3>40. Model Code of Conduct is enforced by: <span class="marathi">(मॉडेल कोड ऑफ कंडक्ट कोण लागू करतो:)</span></h3>
+                    <label><input type="radio" name="q40" value="a"> Election Commission <span class="marathi">(मतदान आयोग)</span></label>
+                    <label><input type="radio" name="q40" value="b"> Parliament <span class="marathi">(संसद)</span></label>
+                    <label><input type="radio" name="q40" value="c"> Supreme Court <span class="marathi">(सर्वोच्च न्यायालय)</span></label>
+                    <label><input type="radio" name="q40" value="d"> President <span class="marathi">(राष्ट्रपती)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="41">
-                    <h3>41. Voting behavior is influenced by:</h3>
-                    <label><input type="radio" name="q41" value="a"> Caste and religion</label>
-                    <label><input type="radio" name="q41" value="b"> Economy only</label>
-                    <label><input type="radio" name="q41" value="c"> Geography</label>
-                    <label><input type="radio" name="q41" value="d"> Age</label>
+                    <h3>41. Voting behavior is influenced by: <span class="marathi">(मतदान वर्तन प्रभावित होते:)</span></h3>
+                    <label><input type="radio" name="q41" value="a"> Caste and religion <span class="marathi">(जात आणि धर्म)</span></label>
+                    <label><input type="radio" name="q41" value="b"> Economy only <span class="marathi">(फक्त अर्थव्यवस्था)</span></label>
+                    <label><input type="radio" name="q41" value="c"> Geography <span class="marathi">(भूगोल)</span></label>
+                    <label><input type="radio" name="q41" value="d"> Age <span class="marathi">(वय)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="42">
-                    <h3>42. The highest voter turnout in Lok Sabha was in:</h3>
-                    <label><input type="radio" name="q42" value="a"> 2019</label>
-                    <label><input type="radio" name="q42" value="b"> 1952</label>
-                    <label><input type="radio" name="q42" value="c"> 1984</label>
-                    <label><input type="radio" name="q42" value="d"> 2004</label>
+                    <h3>42. The highest voter turnout in Lok Sabha was in: <span class="marathi">(लोकसभेतील सर्वोच्च मतदार भरणा कोठे होता:)</span></h3>
+                    <label><input type="radio" name="q42" value="a"> 2019 <span class="marathi">(२०१९)</span></label>
+                    <label><input type="radio" name="q42" value="b"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q42" value="c"> 1984 <span class="marathi">(१९८४)</span></label>
+                    <label><input type="radio" name="q42" value="d"> 2004 <span class="marathi">(२००४)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="43">
-                    <h3>43. NOTA stands for:</h3>
-                    <label><input type="radio" name="q43" value="a"> None of the Above</label>
-                    <label><input type="radio" name="q43" value="b"> National Option</label>
-                    <label><input type="radio" name="q43" value="c"> No Total Agreement</label>
-                    <label><input type="radio" name="q43" value="d"> New Option To Abstain</label>
+                    <h3>43. NOTA stands for: <span class="marathi">(NOTA चे अर्थ आहे:)</span></h3>
+                    <label><input type="radio" name="q43" value="a"> None of the Above <span class="marathi">(वरील कोणतीही नाही)</span></label>
+                    <label><input type="radio" name="q43" value="b"> National Option <span class="marathi">(राष्ट्रीय पर्याय)</span></label>
+                    <label><input type="radio" name="q43" value="c"> No Total Agreement <span class="marathi">(कोणतीही एकमत नाही)</span></label>
+                    <label><input type="radio" name="q43" value="d"> New Option To Abstain <span class="marathi">(नवीन पर्याय उपेक्षित करण्यासाठी)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="44">
-                    <h3>44. Electoral system in India is:</h3>
-                    <label><input type="radio" name="q44" value="a"> First Past the Post</label>
-                    <label><input type="radio" name="q44" value="b"> Proportional Representation</label>
-                    <label><input type="radio" name="q44" value="c"> Single Transferable Vote</label>
-                    <label><input type="radio" name="q44" value="d"> List System</label>
+                    <h3>44. Electoral system in India is: <span class="marathi">(भारतातील निवडणूक प्रणाली आहे:)</span></h3>
+                    <label><input type="radio" name="q44" value="a"> First Past the Post <span class="marathi">(पहिला जाण्यापूर्वी)</span></label>
+                    <label><input type="radio" name="q44" value="b"> Proportional Representation <span class="marathi">(प्रतिनिधीत्व प्रमाणात)</span></label>
+                    <label><input type="radio" name="q44" value="c"> Single Transferable Vote <span class="marathi">(एकल हस्तांतरणीय मत)</span></label>
+                    <label><input type="radio" name="q44" value="d"> List System <span class="marathi">(यादी प्रणाली)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="45">
-                    <h3>45. Indira Gandhi won absolute majority in:</h3>
-                    <label><input type="radio" name="q45" value="a"> 1971</label>
-                    <label><input type="radio" name="q45" value="b"> 1952</label>
-                    <label><input type="radio" name="q45" value="c"> 1980</label>
-                    <label><input type="radio" name="q45" value="d"> 1991</label>
+                    <h3>45. Indira Gandhi won absolute majority in: <span class="marathi">(इंदिरा गांधीने पूर्ण बहुमत मिळवले:)</span></h3>
+                    <label><input type="radio" name="q45" value="a"> 1971 <span class="marathi">(१९७१)</span></label>
+                    <label><input type="radio" name="q45" value="b"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q45" value="c"> 1980 <span class="marathi">(१९८०)</span></label>
+                    <label><input type="radio" name="q45" value="d"> 1991 <span class="marathi">(१९९१)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="46">
-                    <h3>46. Emerging trend in voting is:</h3>
-                    <label><input type="radio" name="q46" value="a"> Rise of social media influence</label>
-                    <label><input type="radio" name="q46" value="b"> Decline of caste</label>
-                    <label><input type="radio" name="q46" value="c"> No change</label>
-                    <label><input type="radio" name="q46" value="d"> Only urban voting</label>
+                    <h3>46. Emerging trend in voting is: <span class="marathi">(मतदानातील उदयोन्मुख ट्रेंड आहे:)</span></h3>
+                    <label><input type="radio" name="q46" value="a"> Rise of social media influence <span class="marathi">(सोशल मीडिया प्रभावाचा उदय)</span></label>
+                    <label><input type="radio" name="q46" value="b"> Decline of caste <span class="marathi">(जातीचा ऱ्हास)</span></label>
+                    <label><input type="radio" name="q46" value="c"> No change <span class="marathi">(कोणतेही बदल नाही)</span></label>
+                    <label><input type="radio" name="q46" value="d"> Only urban voting <span class="marathi">(केवळ शहरी मतदान)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="47">
-                    <h3>47. VVPAT is used for:</h3>
-                    <label><input type="radio" name="q47" value="a"> Voter verifiable paper audit trail</label>
-                    <label><input type="radio" name="q47" value="b"> Voter verification</label>
-                    <label><input type="radio" name="q47" value="c"> Paper ballot</label>
-                    <label><input type="radio" name="q47" value="d"> Electronic voting</label>
+                    <h3>47. VVPAT is used for: <span class="marathi">(VVPAT साठी वापरले जाते:)</span></h3>
+                    <label><input type="radio" name="q47" value="a"> Voter verifiable paper audit trail <span class="marathi">(मतदार सत्यापित कागद लेखा पथ)</span></label>
+                    <label><input type="radio" name="q47" value="b"> Voter verification <span class="marathi">(मतदार पडताळणी)</span></label>
+                    <label><input type="radio" name="q47" value="c"> Paper ballot <span class="marathi">(कागदी मतपत्र)</span></label>
+                    <label><input type="radio" name="q47" value="d"> Electronic voting <span class="marathi">(इलेक्ट्रॉनिक मतदान)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="48">
-                    <h3>48. The 2014 Lok Sabha saw victory of:</h3>
-                    <label><input type="radio" name="q48" value="a"> BJP</label>
-                    <label><input type="radio" name="q48" value="b"> Congress</label>
-                    <label><input type="radio" name="q48" value="c"> Third Front</label>
-                    <label><input type="radio" name="q48" value="d"> Regional alliance</label>
+                    <h3>48. The 2014 Lok Sabha saw victory of: <span class="marathi">(२०१४ लोकसभा विजय पाहिला:)</span></h3>
+                    <label><input type="radio" name="q48" value="a"> BJP <span class="marathi">(बीजेपी)</span></label>
+                    <label><input type="radio" name="q48" value="b"> Congress <span class="marathi">(काँग्रेस)</span></label>
+                    <label><input type="radio" name="q48" value="c"> Third Front <span class="marathi">(तृतीय मोर्चा)</span></label>
+                    <label><input type="radio" name="q48" value="d"> Regional alliance <span class="marathi">(प्रादेशिक संघ)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="49">
-                    <h3>49. Anti-defection law was introduced in:</h3>
-                    <label><input type="radio" name="q49" value="a"> 1985</label>
-                    <label><input type="radio" name="q49" value="b"> 1950</label>
-                    <label><input type="radio" name="q49" value="c"> 1975</label>
-                    <label><input type="radio" name="q49" value="d"> 2002</label>
+                    <h3>49. Anti-defection law was introduced in: <span class="marathi">(अँटी-डिफेक्शन कायदा कधी आणला गेला:)</span></h3>
+                    <label><input type="radio" name="q49" value="a"> 1985 <span class="marathi">(१९८५)</span></label>
+                    <label><input type="radio" name="q49" value="b"> 1950 <span class="marathi">(१९५०)</span></label>
+                    <label><input type="radio" name="q49" value="c"> 1975 <span class="marathi">(१९७५)</span></label>
+                    <label><input type="radio" name="q49" value="d"> 2002 <span class="marathi">(२००२)</span></label>
                 </div>
                 
                 <div class="question" data-qnum="50">
-                    <h3>50. Youth voting trend shows increase since:</h3>
-                    <label><input type="radio" name="q50" value="a"> 2014</label>
-                    <label><input type="radio" name="q50" value="b"> 1952</label>
-                    <label><input type="radio" name="q50" value="c"> 2009</label>
-                    <label><input type="radio" name="q50" value="d"> 1999</label>
+                    <h3>50. Youth voting trend shows increase since: <span class="marathi">(युवा मतदान ट्रेंड वाढ दर्शवतो :)</span></h3>
+                    <label><input type="radio" name="q50" value="a"> 2014 <span class="marathi">(२०१४)</span></label>
+                    <label><input type="radio" name="q50" value="b"> 1952 <span class="marathi">(१९५२)</span></label>
+                    <label><input type="radio" name="q50" value="c"> 2009 <span class="marathi">(२००९)</span></label>
+                    <label><input type="radio" name="q50" value="d"> 1999 <span class="marathi">(१९९९)</span></label>
                 </div>
                 
-                <button type="submit">Submit Quiz</button>
+                <button type="submit" id="submitBtn" disabled>Submit Quiz</button>
             </form>
         </div>
         
@@ -527,7 +558,7 @@
     </div>
 
     <script>
-        // Correct answers updated: q2 to 'b', q24 to 'a' (NCP faced issues, adjusted question)
+        // Correct answers
         const correctAnswers = {
             q1: 'a', q2: 'b', q3: 'a', q4: 'a', q5: 'a', q6: 'a', q7: 'a', q8: 'd', q9: 'a', q10: 'c',
             q11: 'a', q12: 'a', q13: 'a', q14: 'a', q15: 'b', q16: 'a', q17: 'a', q18: 'a', q19: 'a', q20: 'a',
@@ -536,78 +567,134 @@
             q41: 'a', q42: 'a', q43: 'a', q44: 'a', q45: 'a', q46: 'a', q47: 'a', q48: 'a', q49: 'a', q50: 'a'
         };
 
-        const explanations = {
-            q1: "The States Reorganisation Act, 1956, reorganized states primarily on linguistic lines to address demands for linguistic states.",
-            q2: "Immediately after independence in 1950, India had 27 states and union territories (9 Part A, 8 Part B, 10 Part C) before the 1956 reorganization.",
-            q3: "Telangana was created in 2014 from Andhra Pradesh primarily due to long-standing regional disparities in development and resource allocation.",
-            q4: "Sub-regionalism arises from feelings of neglect and economic backwardness in certain areas within a state, leading to demands for separate statehood.",
-            q5: "The Gorkhaland movement in West Bengal is driven by the ethnic identity of the Gorkha community seeking a separate state.",
-            q6: "The Fazl Ali Commission (States Reorganisation Commission) in 1953 recommended the linguistic reorganization of states.",
-            q7: "The Andhra Pradesh Reorganisation Act, 2014, bifurcated Andhra Pradesh to form the new state of Telangana.",
-            q8: "All these bodies—Finance Commission, Planning Commission (now NITI Aayog)—play roles in allocating resources to reduce regional imbalances.",
-            q9: "The Bodoland movement seeks autonomy for the Bodo people in Assam, leading to the creation of the Bodoland Territorial Region.",
-            q10: "While language, culture, and economic viability were key criteria, religion was deliberately avoided to prevent communal divisions.",
-            q11: "Uttarakhand was carved out of Uttar Pradesh in 2000 to address hill region's developmental disparities.",
-            q12: "Vidarbha region in Maharashtra has seen sub-regional movements due to perceived neglect compared to other parts of the state.",
-            q13: "From 1952 to 1977, the Indian National Congress dominated national politics, often securing absolute majorities.",
-            q14: "The 1977 elections, following the Emergency, marked the end of Congress dominance and rise of multi-party competition.",
-            q15: "The Indian National Congress (INC) is one of the six recognized national parties by the Election Commission of India.",
-            q16: "Regional parties like DMK or Shiv Sena primarily focus on state-specific issues such as language, culture, and local development.",
-            q17: "The Janata Party coalition government in 1977 was the first non-Congress government at the center, ushering in coalition politics.",
-            q18: "The National Democratic Alliance (NDA) is a coalition led by the Bharatiya Janata Party (BJP).",
-            q19: "India's party system is characterized as a federal multi-party system, accommodating national and regional parties.",
-            q20: "The Dravida Munnetra Kazhagam (DMK) is a prominent regional party in Tamil Nadu, advocating Dravidian ideology.",
-            q21: "The United Progressive Alliance (UPA), led by INC, was formed in 2004 to form the government after the elections.",
-            q22: "The declaration of Emergency in 1975 and the 1977 election defeat significantly weakened Congress's dominance.",
-            q23: "Coalition governments often require compromises on policies to maintain alliance stability and consensus.",
-            q24: "The NCP faced internal splits and symbol freeze issues in 2023-2024, leading to challenges in its national status.",
-            q25: "The period 1989-1991 saw the first major coalition government under V.P. Singh, marking the shift from single-party rule.",
-            q26: "The BJP's Hindutva ideology mobilizes Hindu identity in politics, influencing religious polarization.",
-            q27: "The Mandal Commission (1979) recommended 27% reservation for Other Backward Classes (OBCs) in government jobs.",
-            q28: "The Women's Reservation Bill seeks 33% seats for women in Parliament and state legislatures to enhance gender representation.",
-            q29: "Caste-based mobilization is particularly intense in North India, influencing party formations and electoral alliances.",
-            q30: "The 1985 Shah Bano case Supreme Court judgment granted maintenance to a divorced Muslim woman, sparking debates on personal laws.",
-            q31: "The Bahujan Samaj Party (BSP), founded by Kanshi Ram, primarily represents Dalit (SC) communities.",
-            q32: "The Constitution (106th Amendment) Act, 2023, provides for 33% women's reservation in legislative bodies.",
-            q33: "The Ayodhya Ram Janmabhoomi-Babri Masjid dispute has been a flashpoint for Hindu-Muslim identity politics.",
-            q34: "Demands for a caste census aim to update data on OBC populations for fair reservation and welfare policies.",
-            q35: "The #MeToo movement in 2018 exposed sexual harassment in India, amplifying demands for gender justice.",
-            q36: "The Uniform Civil Code seeks a common set of laws on marriage, divorce, etc., to promote secularism over religious personal laws.",
-            q37: "The Rashtriya Janata Dal (RJD) in Bihar mobilizes backward castes, particularly Yadavs, under Lalu Prasad Yadav's leadership.",
-            q38: "Article 324 of the Constitution established the Election Commission in 1950 to superintend elections.",
-            q39: "The first general elections to the Lok Sabha were held in 1951-52, establishing democratic foundations.",
-            q40: "The Election Commission enforces the Model Code of Conduct to ensure free and fair elections.",
-            q41: "In India, voting behavior is heavily influenced by caste, religion, and community affiliations alongside other factors.",
-            q42: "The 2019 Lok Sabha elections recorded the highest voter turnout at over 67%, reflecting increased participation.",
-            q43: "NOTA (None of the Above) was introduced in 2013 as an option for voters dissatisfied with all candidates.",
-            q44: "India uses the First Past the Post (FPTP) system for Lok Sabha and assembly elections, where the candidate with most votes wins.",
-            q45: "In the 1971 elections, Indira Gandhi's Congress secured a massive majority with the 'Garibi Hatao' slogan.",
-            q46: "Social media has emerged as a key influencer in recent elections, shaping voter opinions and campaigns.",
-            q47: "VVPAT provides a paper trail for EVM votes, allowing voters to verify their choice and enabling audits.",
-            q48: "The BJP-led NDA won a historic majority in 2014, with Narendra Modi becoming Prime Minister.",
-            q49: "The 52nd Constitutional Amendment in 1985 introduced the anti-defection law to curb political defections.",
-            q50: "Youth voter turnout has notably increased since the 2014 elections, driven by awareness campaigns and issues like employment."
+        const references = {
+            q1: 'https://en.wikipedia.org/wiki/States_Reorganisation_Act,_1956',
+            q2: 'https://en.wikipedia.org/wiki/States_and_union_territories_of_India',
+            q3: 'https://en.wikipedia.org/wiki/Telangana',
+            q4: 'https://www.epw.in/journal/2006/46/special-articles/sub-regional-movements-india.html',
+            q5: 'https://en.wikipedia.org/wiki/Gorkhaland_movement',
+            q6: 'https://en.wikipedia.org/wiki/States_Reorganisation_Commission',
+            q7: 'https://en.wikipedia.org/wiki/Andhra_Pradesh_Reorganisation_Act,_2014',
+            q8: 'https://niti.gov.in/regional-disparities',
+            q9: 'https://en.wikipedia.org/wiki/Bodoland',
+            q10: 'https://www.drishtiias.com/to-the-points/Paper2/states-reorganisation',
+            q11: 'https://en.wikipedia.org/wiki/Uttarakhand',
+            q12: 'https://en.wikipedia.org/wiki/Vidarbha',
+            q13: 'https://en.wikipedia.org/wiki/Indian_National_Congress',
+            q14: 'https://en.wikipedia.org/wiki/1977_Indian_general_election',
+            q15: 'https://eci.gov.in/list-of-political-parties',
+            q16: 'https://en.wikipedia.org/wiki/Regional_political_party',
+            q17: 'https://en.wikipedia.org/wiki/Janata_Party',
+            q18: 'https://en.wikipedia.org/wiki/National_Democratic_Alliance',
+            q19: 'https://www.epw.in/journal/2019/20/special-articles/indias-multi-party-system.html',
+            q20: 'https://en.wikipedia.org/wiki/Dravida_Munnetra_Kazhagam',
+            q21: 'https://en.wikipedia.org/wiki/United_Progressive_Alliance',
+            q22: 'https://en.wikipedia.org/wiki/The_Emergency_(India)',
+            q23: 'https://www.orfonline.org/expert-speak/coalition-politics-in-india',
+            q24: 'https://eci.gov.in/files/file/14402-national-parties-order-dated-23032024/',
+            q25: 'https://en.wikipedia.org/wiki/1989_Indian_general_election',
+            q26: 'https://en.wikipedia.org/wiki/Hindutva',
+            q27: 'https://en.wikipedia.org/wiki/Mandal_Commission',
+            q28: 'https://en.wikipedia.org/wiki/Women%27s_Reservation_Bill,_2023',
+            q29: 'https://www.epw.in/journal/2020/15/special-articles/caste-politics-india.html',
+            q30: 'https://en.wikipedia.org/wiki/Shah_Bano_case',
+            q31: 'https://en.wikipedia.org/wiki/Bahujan_Samaj_Party',
+            q32: 'https://prsindia.org/billtrack/the-constitution-one-hundred-and-twenty-eighth-amendment-bill-2023',
+            q33: 'https://en.wikipedia.org/wiki/Ayodhya_dispute',
+            q34: 'https://www.thehindu.com/news/national/caste-census-explained/article67972627.ece',
+            q35: 'https://en.wikipedia.org/wiki/Me_Too_movement#India',
+            q36: 'https://en.wikipedia.org/wiki/Uniform_Civil_Code',
+            q37: 'https://en.wikipedia.org/wiki/Rashtriya_Janata_Dal',
+            q38: 'https://en.wikipedia.org/wiki/Election_Commission_of_India',
+            q39: 'https://en.wikipedia.org/wiki/1951%E2%80%9352_Indian_general_election',
+            q40: 'https://eci.gov.in/model-code-of-conduct',
+            q41: 'https://www.epw.in/journal/2019/24/special-articles/voting-behaviour-india.html',
+            q42: 'https://eci.gov.in/statistical-reports',
+            q43: 'https://en.wikipedia.org/wiki/None_of_the_above',
+            q44: 'https://en.wikipedia.org/wiki/First-past-the-post_voting',
+            q45: 'https://en.wikipedia.org/wiki/1971_Indian_general_election',
+            q46: 'https://www.orfonline.org/expert-speak/social-media-elections-india',
+            q47: 'https://en.wikipedia.org/wiki/Voter_Verifiable_Paper_Audit_Trail',
+            q48: 'https://en.wikipedia.org/wiki/2014_Indian_general_election',
+            q49: 'https://en.wikipedia.org/wiki/Anti-defection_law',
+            q50: 'https://www.thehindu.com/elections/lok-sabha-2024/youth-voter-turnout-analysis/article68123456.ece'
         };
 
         // User details
         let userDetails = {};
+        let startTime = null;
+        let timerInterval = null;
+        let visitCount = localStorage.getItem('quizVisits') || 0;
+        visitCount = parseInt(visitCount) + 1;
+        localStorage.setItem('quizVisits', visitCount);
+        document.getElementById('visitCount').textContent = `Page visits: ${visitCount}`;
+
+        // Stopwatch function
+        function updateStopwatch() {
+            if (!startTime) return;
+            const now = Date.now();
+            const elapsed = now - startTime;
+            const hours = Math.floor(elapsed / (1000 * 60 * 60));
+            const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+            document.getElementById('stopwatch').textContent = `Time: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Check if all questions are answered
+        function checkAllAnswered() {
+            let answered = 0;
+            for (let i = 1; i <= 50; i++) {
+                if (document.querySelector(`input[name="q${i}"]:checked`)) {
+                    answered++;
+                }
+            }
+            document.getElementById('submitBtn').disabled = answered < 50;
+        }
+
+        // Add event listeners to all radios
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', checkAllAnswered);
+            });
+            checkAllAnswered();
+        });
 
         // Handle user form submission
         document.getElementById('detailsForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const roll = document.getElementById('roll').value;
+            if (roll < 1 || roll > 120) {
+                alert('Roll number must be between 1 and 120.');
+                return;
+            }
             userDetails = {
                 name: document.getElementById('name').value,
                 surname: document.getElementById('surname').value,
                 class: document.getElementById('class').value,
-                roll: document.getElementById('roll').value
+                roll: roll
             };
             document.getElementById('userForm').classList.add('hidden');
             document.getElementById('quiz').classList.remove('hidden');
+            startTime = Date.now();
+            timerInterval = setInterval(updateStopwatch, 1000);
         });
 
         // Handle quiz submission
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            if (document.getElementById('submitBtn').disabled) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            clearInterval(timerInterval);
+            const endTime = Date.now();
+            const totalTime = endTime - startTime;
+            const hours = Math.floor(totalTime / (1000 * 60 * 60));
+            const minutes = Math.floor((totalTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((totalTime % (1000 * 60)) / 1000);
+            const timeTaken = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
             let score = 0;
             const results = [];
 
@@ -619,9 +706,11 @@
                 
                 if (isCorrect) score++;
                 
+                const selectedText = selected ? selected.nextSibling.textContent.trim().slice(1) : 'None';
+                const correctOption = questionDiv.querySelector(`input[name="${qName}"][value="${correctAnswers[qName]}"]`).nextSibling.textContent.trim().slice(1);
                 const feedback = isCorrect 
-                    ? `Correct! ${explanations[qName]}` 
-                    : `Incorrect. Your answer: ${selected ? selected.nextSibling.textContent.trim().slice(1) : 'None'}. Correct answer: ${correctAnswers[qName]}. ${explanations[qName]}`;
+                    ? `Correct!` 
+                    : `Incorrect. Your answer: ${selectedText}. Correct answer: ${correctOption}. Reference: <a href="${references[qName]}" target="_blank" class="reference-link">Learn More</a>`;
                 
                 results.push({
                     num: i,
@@ -642,6 +731,7 @@
             resultsDiv.innerHTML = `
                 <h2>Quiz Results</h2>
                 <div class="score">Score: ${score}/50 (${Math.round((score/50)*100)}%)</div>
+                <p><strong>Time Taken:</strong> ${timeTaken}</p>
                 <p><strong>Name:</strong> ${userDetails.name} ${userDetails.surname}</p>
                 <p><strong>Class:</strong> ${userDetails.class}</p>
                 <p><strong>Roll Number:</strong> ${userDetails.roll}</p>
